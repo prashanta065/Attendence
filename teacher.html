@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Teacher Dashboard - Attendance System</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body class="dashboard-page">
+    <!-- Sidebar -->
+    <div class="sidebar" id="sidebar">
+        <div class="sidebar-header">
+            <div class="logo">
+                <i class="fas fa-graduation-cap"></i>
+                <h2>Attendance</h2>
+            </div>
+            <button class="sidebar-toggle" id="sidebarToggle">
+                <i class="fas fa-bars"></i>
+            </button>
+        </div>
+
+        <nav class="sidebar-nav">
+            <a href="#" class="nav-item active" data-section="dashboard">
+                <i class="fas fa-th-large"></i>
+                <span>Dashboard</span>
+            </a>
+            <a href="#" class="nav-item" data-section="attendance">
+                <i class="fas fa-clipboard-list"></i>
+                <span>Attendance Records</span>
+            </a>
+            <a href="index.html" class="nav-item">
+                <i class="fas fa-qrcode"></i>
+                <span>QR Scanner</span>
+            </a>
+        </nav>
+
+        <div class="sidebar-footer">
+            <div class="user-info">
+                <div class="user-avatar">
+                    <i class="fas fa-user-tie"></i>
+                </div>
+                <div class="user-details">
+                    <p class="user-name" id="teacherName">Teacher</p>
+                    <p class="user-role">Administrator</p>
+                </div>
+            </div>
+            <button class="btn btn-logout" id="logoutBtn">
+                <i class="fas fa-sign-out-alt"></i>
+                <span>Logout</span>
+            </button>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="dashboard-content">
+        <!-- Top Bar -->
+        <div class="topbar">
+            <div class="topbar-left">
+                <button class="mobile-toggle" id="mobileToggle">
+                    <i class="fas fa-bars"></i>
+                </button>
+                <h1>Teacher Dashboard</h1>
+            </div>
+            <div class="topbar-right">
+                <div class="date-display" id="dashboardDate"></div>
+            </div>
+        </div>
+
+        <!-- Dashboard Section -->
+        <div class="section active" id="dashboardSection">
+            <!-- Stats Cards -->
+            <div class="dashboard-stats">
+                <div class="stat-card-lg">
+                    <div class="stat-icon-lg total">
+                        <i class="fas fa-users"></i>
+                    </div>
+                    <div class="stat-content">
+                        <h2>48</h2>
+                        <p>Total Students</p>
+                    </div>
+                </div>
+
+                <div class="stat-card-lg">
+                    <div class="stat-icon-lg present">
+                        <i class="fas fa-user-check"></i>
+                    </div>
+                    <div class="stat-content">
+                        <h2 id="dashPresentCount">0</h2>
+                        <p>Present Today</p>
+                    </div>
+                </div>
+
+                <div class="stat-card-lg">
+                    <div class="stat-icon-lg absent">
+                        <i class="fas fa-user-times"></i>
+                    </div>
+                    <div class="stat-content">
+                        <h2 id="dashAbsentCount">0</h2>
+                        <p>Absent Today</p>
+                    </div>
+                </div>
+
+                <div class="stat-card-lg">
+                    <div class="stat-icon-lg records">
+                        <i class="fas fa-database"></i>
+                    </div>
+                    <div class="stat-content">
+                        <h2 id="dashTotalRecords">0</h2>
+                        <p>Total Records</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Analytics Row -->
+            <div class="analytics-row">
+                <!-- Attendance Rate Chart -->
+                <div class="analytics-card">
+                    <div class="analytics-header">
+                        <h3><i class="fas fa-chart-pie"></i> Today's Attendance Rate</h3>
+                    </div>
+                    <div class="analytics-body">
+                        <div class="circular-progress" id="attendanceCircle">
+                            <div class="progress-value">0%</div>
+                        </div>
+                        <div class="analytics-info">
+                            <div class="info-item">
+                                <span class="info-label">Present Rate</span>
+                                <span class="info-value text-success" id="presentRate">0%</span>
+                            </div>
+                            <div class="info-item">
+                                <span class="info-label">Absent Rate</span>
+                                <span class="info-value text-danger" id="absentRate">0%</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Quick Actions -->
+            <div class="quick-actions">
+                <h3><i class="fas fa-bolt"></i> Quick Actions</h3>
+                <div class="action-grid">
+                    <button class="action-btn" id="viewRecordsBtn">
+                        <i class="fas fa-eye"></i>
+                        <span>View All Records</span>
+                    </button>
+                    <button class="action-btn" id="resetTodayBtn">
+                        <i class="fas fa-undo"></i>
+                        <span>Reset Today</span>
+                    </button>
+                    <button class="action-btn" id="exportBtn">
+                        <i class="fas fa-download"></i>
+                        <span>Export CSV</span>
+                    </button>
+                    <button class="action-btn" onclick="window.location.href='index.html'">
+                        <i class="fas fa-qrcode"></i>
+                        <span>QR Scanner</span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Recent Attendance -->
+            <div class="recent-section">
+                <h3><i class="fas fa-history"></i> Recent Attendance</h3>
+                <div id="recentList" class="recent-list">
+                    <!-- Will be populated by JS -->
+                </div>
+            </div>
+        </div>
+
+        <!-- Attendance Records Section -->
+        <div class="section" id="attendanceSection">
+            <div class="records-header">
+                <h2><i class="fas fa-clipboard-list"></i> Attendance Records</h2>
+                
+                <div class="filters">
+                    <div class="filter-group">
+                        <input type="text" id="searchInput" placeholder="Search by name or ID..." class="filter-input">
+                    </div>
+                    <div class="filter-group">
+                        <input type="date" id="dateFilter" class="filter-input">
+                    </div>
+                    <div class="filter-group">
+                        <select id="statusFilter" class="filter-input">
+                            <option value="all">All Status</option>
+                            <option value="Present">Present</option>
+                            <option value="Absent">Absent</option>
+                        </select>
+                    </div>
+                    <button id="clearFilters" class="btn btn-secondary">
+                        <i class="fas fa-times"></i> Clear
+                    </button>
+                </div>
+            </div>
+
+            <!-- Attendance Table -->
+            <div class="table-container">
+                <table class="attendance-table" id="attendanceTable">
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Student ID</th>
+                            <th>Name</th>
+                            <th>Class</th>
+                            <th>Roll</th>
+                            <th>Date</th>
+                            <th>Time</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody id="attendanceTableBody">
+                        <!-- Will be populated by JS -->
+                    </tbody>
+                </table>
+            </div>
+
+            <div id="noRecords" class="no-records" style="display:none;">
+                <i class="fas fa-inbox"></i>
+                <p>No attendance records found</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast Notification -->
+    <div id="toast" class="toast"></div>
+
+    <script src="script.js"></script>
+    <script>
+        // Check authentication
+        if (!sessionStorage.getItem('teacherLoggedIn')) {
+            window.location.href = 'login.html';
+        }
+
+        // Set teacher name
+        const teacherName = sessionStorage.getItem('teacherName') || 'Teacher';
+        document.getElementById('teacherName').textContent = teacherName;
+
+        // Logout
+        document.getElementById('logoutBtn').addEventListener('click', () => {
+            if (confirm('Are you sure you want to logout?')) {
+                sessionStorage.removeItem('teacherLoggedIn');
+                sessionStorage.removeItem('teacherName');
+                window.location.href = 'login.html';
+            }
+        });
+
+        // Mobile Toggle
+        document.getElementById('mobileToggle').addEventListener('click', () => {
+            document.getElementById('sidebar').classList.toggle('active');
+        });
+
+        // Sidebar Toggle
+        document.getElementById('sidebarToggle').addEventListener('click', () => {
+            document.getElementById('sidebar').classList.toggle('collapsed');
+        });
+
+        // Navigation
+        document.querySelectorAll('.nav-item').forEach(item => {
+            item.addEventListener('click', (e) => {
+                const section = e.currentTarget.getAttribute('data-section');
+                if (!section) return;
+                
+                e.preventDefault();
+                
+                // Update active nav
+                document.querySelectorAll('.nav-item').forEach(nav => nav.classList.remove('active'));
+                e.currentTarget.classList.add('active');
+                
+                // Show section
+                document.querySelectorAll('.section').forEach(sec => sec.classList.remove('active'));
+                document.getElementById(section + 'Section').classList.add('active');
+                
+                // Refresh data when switching sections
+                if (section === 'dashboard') {
+                    updateDashboardStats();
+                    loadRecentAttendance();
+                } else if (section === 'attendance') {
+                    loadAttendanceTable();
+                }
+            });
+        });
+
+        // Quick Actions
+        document.getElementById('viewRecordsBtn').addEventListener('click', () => {
+            document.querySelectorAll('.nav-item').forEach(nav => nav.classList.remove('active'));
+            document.querySelectorAll('.nav-item')[1].classList.add('active');
+            document.querySelectorAll('.section').forEach(sec => sec.classList.remove('active'));
+            document.getElementById('attendanceSection').classList.add('active');
+            loadAttendanceTable();
+        });
+
+        // Date Display
+        function updateDashboardDate() {
+            const now = new Date();
+            const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+            document.getElementById('dashboardDate').textContent = now.toLocaleDateString('en-US', options);
+        }
+        updateDashboardDate();
+        setInterval(updateDashboardDate, 60000);
+    </script>
+</body>
+</html>

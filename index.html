@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Attendance System - QR Scanner</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/html5-qrcode@2.3.8/html5-qrcode.min.js"></script>
+</head>
+<body class="main-page">
+    <!-- Full Screen Container -->
+    <div class="fullscreen-container">
+        <!-- Header -->
+        <header class="header">
+            <div class="header-content">
+                <div class="logo">
+                    <i class="fas fa-graduation-cap"></i>
+                    <h1>Attendance System</h1>
+                </div>
+                <div class="header-actions">
+                    <div class="date-time" id="dateTime"></div>
+                    <a href="login.html" class="btn-teacher">
+                        <i class="fas fa-user-tie"></i> Teacher Portal
+                    </a>
+                </div>
+            </div>
+        </header>
+
+        <!-- Main Content -->
+        <div class="main-content fullscreen">
+            <!-- Unified Attendance Card -->
+            <div class="unified-attendance-card">
+                <div class="attendance-header">
+                    <h2><i class="fas fa-clipboard-check"></i> Student Attendance</h2>
+                    <p>Scan QR code, upload image, or enter Student ID manually</p>
+                </div>
+
+                <div class="attendance-grid">
+                    <!-- QR Scanner Section -->
+                    <div class="attendance-method">
+                        <div class="method-card scanner-method">
+                            <div class="method-header">
+                                <div class="method-icon">
+                                    <i class="fas fa-qrcode"></i>
+                                </div>
+                                <h3>QR Code Scanner</h3>
+                            </div>
+                            
+                            <div class="method-body">
+                                <!-- Camera Scanner -->
+                                <div class="scanner-controls">
+                                    <button id="startScanBtn" class="btn btn-primary btn-full">
+                                        <i class="fas fa-camera"></i> Start Camera Scan
+                                    </button>
+                                    <button id="stopScanBtn" class="btn btn-secondary btn-full" style="display:none;">
+                                        <i class="fas fa-stop"></i> Stop Camera
+                                    </button>
+                                </div>
+                                
+                                <div id="qr-reader" style="display:none;"></div>
+                                
+                                <!-- File Upload -->
+                                <div class="upload-section">
+                                    <label for="qr-input-file" class="upload-label">
+                                        <i class="fas fa-cloud-upload-alt"></i>
+                                        <span>Upload QR Code Image</span>
+                                        <input type="file" id="qr-input-file" accept="image/*" style="display:none;">
+                                    </label>
+                                </div>
+
+                                <!-- Scan Result -->
+                                <div id="scanResult" style="display:none;"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Manual Attendance Section -->
+                    <div class="attendance-method">
+                        <div class="method-card manual-method">
+                            <div class="method-header">
+                                <div class="method-icon">
+                                    <i class="fas fa-keyboard"></i>
+                                </div>
+                                <h3>Manual Entry</h3>
+                            </div>
+                            
+                            <div class="method-body">
+                                <div class="search-box">
+                                    <input type="text" id="studentIdInput" placeholder="Enter Student ID (e.g., kmssa8100250)" class="input-field">
+                                    <button id="searchBtn" class="btn btn-search">
+                                        <i class="fas fa-search"></i>
+                                    </button>
+                                </div>
+
+                                <!-- Student Detail Card -->
+                                <div id="studentDetail" style="display:none;">
+                                    <div class="student-card">
+                                        <div class="student-avatar">
+                                            <i class="fas fa-user-graduate"></i>
+                                        </div>
+                                        <div class="student-info">
+                                            <h3 id="studentName"></h3>
+                                            <div class="student-details">
+                                                <p><strong>ID:</strong> <span id="studentId"></span></p>
+                                                <p><strong>Class:</strong> <span id="studentClass"></span></p>
+                                                <p><strong>Roll:</strong> <span id="studentRoll"></span></p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="action-buttons">
+                                        <button id="markPresentBtn" class="btn btn-success">
+                                            <i class="fas fa-check"></i> Mark Present
+                                        </button>
+                                        <button id="markAbsentBtn" class="btn btn-danger">
+                                            <i class="fas fa-times"></i> Mark Absent
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Recent Activity -->
+            <div class="recent-activity-panel">
+                <div class="panel-header">
+                    <h3><i class="fas fa-history"></i> Recent Attendance</h3>
+                    <span class="badge" id="todayCount">0 Today</span>
+                </div>
+                <div class="panel-body">
+                    <div id="mainRecentList" class="recent-list-main">
+                        <!-- Will be populated by JS -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast Notification -->
+    <div id="toast" class="toast"></div>
+
+    <script src="script.js"></script>
+</body>
+</html>
