@@ -65,7 +65,7 @@ function isAlreadyMarkedToday(studentId) {
 }
 
 // Show toast notification
-function showToast(message, type = 'success') {
+function showToast(message, type = 'success', duration = 3000) {
     const toast = document.getElementById('toast');
     if (!toast) return;
     
@@ -74,7 +74,7 @@ function showToast(message, type = 'success') {
     
     setTimeout(() => {
         toast.classList.remove('show');
-    }, 3000);
+    }, duration);
 }
 
 // Update statistics on main page
@@ -99,7 +99,7 @@ function loadMainPageRecent() {
     }
     
     if (recent.length === 0) {
-        recentList.innerHTML = '<p style="text-align:center; color:#64748b; padding: 2rem;">No attendance records yet</p>';
+        recentList.innerHTML = '<p style="text-align:center; color:var(--text-secondary); padding: 2rem;">No attendance records yet</p>';
         return;
     }
     
@@ -107,8 +107,8 @@ function loadMainPageRecent() {
         <div class="recent-item">
             <div class="recent-info">
                 <h4>${record.name}</h4>
-                <p style="color:#64748b; font-size: 0.9rem;">${record.studentId} • ${record.class} • Roll: ${record.roll}</p>
-                <p style="font-size:0.85rem; color:#94a3b8; margin-top: 0.25rem;">
+                <p style="color:var(--text-secondary); font-size: 0.9rem;">${record.studentId} • ${record.class} • Roll: ${record.roll}</p>
+                <p style="font-size:0.85rem; color:var(--text-light); margin-top: 0.25rem;">
                     <i class="fas fa-calendar"></i> ${record.date} at ${record.time}
                 </p>
             </div>
@@ -166,6 +166,17 @@ function markAttendance(studentData, status) {
 // ===========================
 
 let html5QrCode = null;
+const QR_ALLOWED_CLASS = '10T';
+const QR_CLASS_REJECTION_NOTICE = 'You are not registered as the Class 10T students If you are student but class is mistake Please Contact Hemraj Shahi and Arbind Kumar Dube';
+
+function isAllowedQrClass(studentData) {
+    if (!studentData || studentData.class === undefined || studentData.class === null) {
+        return false;
+    }
+
+    const studentClass = String(studentData.class).trim().toUpperCase();
+    return studentClass === QR_ALLOWED_CLASS;
+}
 
 function startQRScanner() {
     const qrReaderDiv = document.getElementById('qr-reader');
@@ -226,6 +237,12 @@ function onScanSuccess(decodedText, decodedResult) {
             showToast('Invalid QR code format!', 'error');
             return;
         }
+
+        if (!isAllowedQrClass(studentData)) {
+            showToast(QR_CLASS_REJECTION_NOTICE, 'error', 10000);
+            stopQRScanner();
+            return;
+        }
         
         // Display student info
         displayScannedStudent(studentData);
@@ -253,7 +270,7 @@ function displayScannedStudent(studentData) {
     if (!scanResult) return;
     
     scanResult.innerHTML = `
-        <div class="student-card" style="margin-top: 1rem; animation: slideIn 0.5s ease;">
+        <div class="student-card" style="margin-top: 1rem;">
             <div class="student-avatar">
                 <i class="fas fa-user-graduate"></i>
             </div>
@@ -263,7 +280,7 @@ function displayScannedStudent(studentData) {
                     <p><strong>Student ID:</strong> ${studentData.studentId}</p>
                     <p><strong>Class:</strong> ${studentData.class}</p>
                     <p><strong>Roll No:</strong> ${studentData.roll}</p>
-                    <p style="color: #10b981; font-weight: 600; margin-top: 0.5rem;">
+                    <p style="color: var(--success); font-weight: 600; margin-top: 0.5rem;">
                         <i class="fas fa-check-circle"></i> Marked Present
                     </p>
                 </div>
@@ -290,6 +307,11 @@ function handleQRFileUpload(file) {
                 
                 if (!studentData.studentId || !studentData.name) {
                     showToast('Invalid QR code format!', 'error');
+                    return;
+                }
+
+                if (!isAllowedQrClass(studentData)) {
+                    showToast(QR_CLASS_REJECTION_NOTICE, 'error', 10000);
                     return;
                 }
                 
@@ -478,8 +500,51 @@ function loadAttendanceTable(filters = {}) {
             <td>${record.date}</td>
             <td>${record.time}</td>
             <td><span class="status-badge ${record.status.toLowerCase()}">${record.status}</span></td>
+            <td>
+                <div class="status-edit-controls">
+                    <button class="btn-status-edit ${record.status === 'Present' ? 'active' : ''}" onclick="updateAttendanceStatus('${record.timestamp}', 'Present')">Present</button>
+                    <button class="btn-status-edit ${record.status === 'Absent' ? 'active' : ''}" onclick="updateAttendanceStatus('${record.timestamp}', 'Absent')">Absent</button>
+                </div>
+            </td>
         </tr>
     `).join('');
+}
+
+function getActiveDashboardFilters() {
+    const searchInput = document.getElementById('searchInput');
+    const dateFilter = document.getElementById('dateFilter');
+    const statusFilter = document.getElementById('statusFilter');
+
+    return {
+        search: searchInput ? searchInput.value : '',
+        date: dateFilter ? dateFilter.value : '',
+        status: statusFilter ? statusFilter.value : 'all'
+    };
+}
+
+function updateAttendanceStatus(timestamp, newStatus) {
+    const records = getAttendanceRecords();
+    const recordIndex = records.findIndex(record => record.timestamp === timestamp);
+
+    if (recordIndex === -1) {
+        showToast('Attendance record not found!', 'error');
+        return;
+    }
+
+    if (records[recordIndex].status === newStatus) {
+        showToast(`Already marked ${newStatus}.`, 'error');
+        return;
+    }
+
+    records[recordIndex].status = newStatus;
+    saveAttendanceRecords(records);
+
+    showToast(`Status updated to ${newStatus}.`, 'success');
+
+    updateDashboardStats();
+    loadRecentAttendance();
+    loadMainPageRecent();
+    loadAttendanceTable(getActiveDashboardFilters());
 }
 
 function resetTodayAttendance() {

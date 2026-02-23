@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Teacher Dashboard - Attendance System</title>
+    <link rel="icon" type="image/png" href="favicon.png">
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -14,10 +15,25 @@
     <!-- Sidebar -->
     <div class="sidebar" id="sidebar">
         <div class="sidebar-header">
-            <div class="logo">
-                <i class="fas fa-graduation-cap"></i>
-                <h2>Attendance</h2>
+            <div class="logo school-brand navbar-brand-pro">
+                <a href="https://www.butwalhacks.com" target="_blank" rel="noopener noreferrer" class="brand-logo-link" aria-label="Open Butwal Hacks website">
+                    <img
+                        src="https://www.butwalhacks.com/logo.png"
+                        alt="Butwal Hacks Logo"
+                        class="brand-logo-img"
+                        width="42"
+                        height="42"
+                        decoding="async"
+                    >
+                </a>
+                <div class="brand-title-wrap">
+                    <h2>Attendance System</h2>
+                    <p class="brand-subtitle">School Dashboard</p>
+                </div>
             </div>
+            <button class="sidebar-close" id="mobileSidebarClose" aria-label="Close sidebar">
+                <i class="fas fa-xmark"></i>
+            </button>
             <button class="sidebar-toggle" id="sidebarToggle">
                 <i class="fas fa-bars"></i>
             </button>
@@ -41,7 +57,14 @@
         <div class="sidebar-footer">
             <div class="user-info">
                 <div class="user-avatar">
-                    <i class="fas fa-user-tie"></i>
+                    <img
+                        src="https://ui-avatars.com/api/?name=Arbind+Kumar+Dube&background=ffffff&color=dc2626&size=96&rounded=true&bold=true"
+                        alt="Arbind Kumar Dube Avatar"
+                        class="teacher-avatar-img"
+                        width="48"
+                        height="48"
+                        decoding="async"
+                    >
                 </div>
                 <div class="user-details">
                     <p class="user-name" id="teacherName">Teacher</p>
@@ -63,15 +86,38 @@
                 <button class="mobile-toggle" id="mobileToggle">
                     <i class="fas fa-bars"></i>
                 </button>
-                <h1>Teacher Dashboard</h1>
+                <div>
+                    <h1>Teacher Dashboard</h1>
+                    <p class="school-slogan">No Paper. No Delay. Just Scan.</p>
+                </div>
             </div>
             <div class="topbar-right">
                 <div class="date-display" id="dashboardDate"></div>
             </div>
         </div>
 
+        <div class="mobile-sidebar-overlay" id="mobileSidebarOverlay"></div>
+
         <!-- Dashboard Section -->
         <div class="section active" id="dashboardSection">
+            <div class="dashboard-hero-card">
+                <div class="hero-copy">
+                    <p class="hero-label">Teacher Portal</p>
+                    <h2>Welcome back, <span id="teacherWelcomeName">Teacher</span></h2>
+                    <p>Track attendance in real-time, review class records quickly, and manage everything from one responsive dashboard.</p>
+                </div>
+                <div class="hero-actions">
+                    <button class="hero-btn hero-btn-primary" id="heroViewRecordsBtn">
+                        <i class="fas fa-clipboard-list"></i>
+                        <span>Open Records</span>
+                    </button>
+                    <button class="hero-btn hero-btn-secondary" onclick="window.location.href='index.html'">
+                        <i class="fas fa-qrcode"></i>
+                        <span>Go to Scanner</span>
+                    </button>
+                </div>
+            </div>
+
             <!-- Stats Cards -->
             <div class="dashboard-stats">
                 <div class="stat-card-lg">
@@ -138,6 +184,7 @@
                         </div>
                     </div>
                 </div>
+
             </div>
 
             <!-- Quick Actions -->
@@ -155,6 +202,10 @@
                     <button class="action-btn" id="exportBtn">
                         <i class="fas fa-download"></i>
                         <span>Export CSV</span>
+                    </button>
+                    <button class="action-btn" id="printReportBtn">
+                        <i class="fas fa-print"></i>
+                        <span>Print Report</span>
                     </button>
                     <button class="action-btn" onclick="window.location.href='index.html'">
                         <i class="fas fa-qrcode"></i>
@@ -210,6 +261,7 @@
                             <th>Date</th>
                             <th>Time</th>
                             <th>Status</th>
+                            <th>Action</th>
                         </tr>
                     </thead>
                     <tbody id="attendanceTableBody">
@@ -238,6 +290,10 @@
         // Set teacher name
         const teacherName = sessionStorage.getItem('teacherName') || 'Teacher';
         document.getElementById('teacherName').textContent = teacherName;
+        const teacherWelcomeName = document.getElementById('teacherWelcomeName');
+        if (teacherWelcomeName) {
+            teacherWelcomeName.textContent = teacherName;
+        }
 
         // Logout
         document.getElementById('logoutBtn').addEventListener('click', () => {
@@ -249,8 +305,56 @@
         });
 
         // Mobile Toggle
-        document.getElementById('mobileToggle').addEventListener('click', () => {
-            document.getElementById('sidebar').classList.toggle('active');
+        const sidebar = document.getElementById('sidebar');
+        const mobileToggle = document.getElementById('mobileToggle');
+        const mobileOverlay = document.getElementById('mobileSidebarOverlay');
+        const mobileSidebarClose = document.getElementById('mobileSidebarClose');
+
+        function toggleMobileSidebar(forceState) {
+            const shouldOpen = typeof forceState === 'boolean'
+                ? forceState
+                : !sidebar.classList.contains('active');
+
+            sidebar.classList.toggle('active', shouldOpen);
+            document.body.classList.toggle('sidebar-open', shouldOpen);
+            mobileOverlay.classList.toggle('active', shouldOpen);
+        }
+
+        mobileToggle.addEventListener('click', (e) => {
+            e.stopPropagation();
+            toggleMobileSidebar();
+        });
+
+        mobileOverlay.addEventListener('click', () => {
+            toggleMobileSidebar(false);
+        });
+
+        if (mobileSidebarClose) {
+            mobileSidebarClose.addEventListener('click', () => {
+                toggleMobileSidebar(false);
+            });
+        }
+
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') {
+                toggleMobileSidebar(false);
+            }
+        });
+
+        window.addEventListener('resize', () => {
+            if (window.innerWidth > 900) {
+                toggleMobileSidebar(false);
+            }
+        });
+
+        document.querySelector('.dashboard-content').addEventListener('click', (e) => {
+            if (window.innerWidth > 900 || !sidebar.classList.contains('active')) return;
+
+            const clickedInsideSidebar = e.target.closest('#sidebar');
+            const clickedMenuButton = e.target.closest('#mobileToggle');
+            if (!clickedInsideSidebar && !clickedMenuButton) {
+                toggleMobileSidebar(false);
+            }
         });
 
         // Sidebar Toggle
@@ -281,6 +385,10 @@
                 } else if (section === 'attendance') {
                     loadAttendanceTable();
                 }
+
+                if (window.innerWidth <= 900) {
+                    toggleMobileSidebar(false);
+                }
             });
         });
 
@@ -291,6 +399,26 @@
             document.querySelectorAll('.section').forEach(sec => sec.classList.remove('active'));
             document.getElementById('attendanceSection').classList.add('active');
             loadAttendanceTable();
+            if (window.innerWidth <= 900) {
+                toggleMobileSidebar(false);
+            }
+        });
+
+        const heroViewRecordsBtn = document.getElementById('heroViewRecordsBtn');
+        if (heroViewRecordsBtn) {
+            heroViewRecordsBtn.addEventListener('click', () => {
+                document.getElementById('viewRecordsBtn').click();
+            });
+        }
+
+        // Print report
+        document.getElementById('printReportBtn').addEventListener('click', () => {
+            document.querySelectorAll('.nav-item').forEach(nav => nav.classList.remove('active'));
+            document.querySelectorAll('.nav-item')[1].classList.add('active');
+            document.querySelectorAll('.section').forEach(sec => sec.classList.remove('active'));
+            document.getElementById('attendanceSection').classList.add('active');
+            loadAttendanceTable();
+            window.print();
         });
 
         // Date Display

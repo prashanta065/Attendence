@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Teacher Login - Attendance System</title>
+    <link rel="icon" type="image/png" href="favicon.png">
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -11,70 +12,88 @@
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 </head>
 <body class="login-page">
-    <div class="login-container">
-        <div class="login-card">
-            <div class="login-header">
-                <div class="login-icon">
-                    <i class="fas fa-user-shield"></i>
+    <div class="login-container portal-layout">
+        <div class="portal-card">
+            <div class="portal-hero">
+                <div class="login-logo-wrap">
+                    <a href="https://www.butwalhacks.com" target="_blank" rel="noopener noreferrer" class="login-logo-link" aria-label="Open Butwal Hacks website">
+                        <img
+                            src="https://www.butwalhacks.com/logo.png"
+                            alt="Butwal Hacks Logo"
+                            class="login-logo-img"
+                            width="72"
+                            height="72"
+                            decoding="async"
+                        >
+                    </a>
                 </div>
-                <h1>Teacher Portal</h1>
-                <p>Access your dashboard</p>
+                <h1>Attendance System</h1>
+                <p class="login-tagline">No Paper. No Delay. Just Scan.</p>
+                <p class="hero-subtitle">Teacher Portal Sign In</p>
             </div>
 
-            <form id="loginForm" class="login-form">
-                <div class="form-group">
-                    <label for="teacherId">
-                        <i class="fas fa-user"></i> Teacher ID
-                    </label>
-                    <input 
-                        type="text" 
-                        id="teacherId" 
-                        class="form-input" 
-                        placeholder="Enter Teacher ID"
-                        required
-                    >
-                </div>
+            <div class="portal-body">
+                <form id="loginForm" class="login-form">
+                    <div id="errorMessage" class="error-message" style="display:none;">
+                        <i class="fas fa-exclamation-circle"></i>
+                        <span></span>
+                    </div>
 
-                <div class="form-group">
-                    <label for="password">
-                        <i class="fas fa-lock"></i> Password
-                    </label>
-                    <div class="password-input">
+                    <div class="form-group">
+                        <label for="teacherId">
+                            <i class="fas fa-user"></i> Teacher ID
+                        </label>
                         <input 
-                            type="password" 
-                            id="password" 
+                            type="text" 
+                            id="teacherId" 
                             class="form-input" 
-                            placeholder="Enter Password"
+                            placeholder="Enter Teacher ID"
+                            autocomplete="username"
                             required
                         >
-                        <button type="button" id="togglePassword" class="toggle-password">
-                            <i class="fas fa-eye"></i>
-                        </button>
                     </div>
+
+                    <div class="form-group">
+                        <label for="password">
+                            <i class="fas fa-lock"></i> Password
+                        </label>
+                        <div class="password-input">
+                            <input 
+                                type="password" 
+                                id="password" 
+                                class="form-input" 
+                                placeholder="Enter Password"
+                                autocomplete="current-password"
+                                required
+                            >
+                            <button type="button" id="togglePassword" class="toggle-password">
+                                <i class="fas fa-eye"></i>
+                            </button>
+                        </div>
+                        <small id="capsWarning" class="caps-warning" style="display:none;">
+                            <i class="fas fa-exclamation-triangle"></i> Caps Lock is on
+                        </small>
+                    </div>
+
+                    <div class="login-options">
+                        <label class="remember-option" for="rememberTeacher">
+                            <input type="checkbox" id="rememberTeacher">
+                            <span>Remember Teacher ID</span>
+                        </label>
+                    </div>
+
+                    <button type="submit" class="btn btn-login">
+                        <i class="fas fa-sign-in-alt"></i> Login
+                    </button>
+                </form>
+
+                <div class="login-footer">
+                    <a href="index.html" class="back-link">
+                        <i class="fas fa-house"></i> Back to Home
+                    </a>
+                    <p class="support-note">Need help? Contact school admin.</p>
                 </div>
-
-                <div id="errorMessage" class="error-message" style="display:none;">
-                    <i class="fas fa-exclamation-circle"></i>
-                    <span></span>
-                </div>
-
-                <button type="submit" class="btn btn-login">
-                    <i class="fas fa-sign-in-alt"></i> Login
-                </button>
-            </form>
-
-            <div class="login-footer">
-                <a href="index.html" class="back-link">
-                    <i class="fas fa-arrow-left"></i> Back to Attendance
-                </a>
             </div>
-        </div>
-
-        <!-- Background Decoration -->
-        <div class="bg-decoration">
-            <div class="circle circle-1"></div>
-            <div class="circle circle-2"></div>
-            <div class="circle circle-3"></div>
         </div>
     </div>
 
@@ -95,12 +114,34 @@
             }
         });
 
+        // Remember teacher ID
+        const teacherIdInput = document.getElementById('teacherId');
+        const rememberTeacherInput = document.getElementById('rememberTeacher');
+        const savedTeacherId = localStorage.getItem('rememberedTeacherId');
+
+        if (savedTeacherId) {
+            teacherIdInput.value = savedTeacherId;
+            rememberTeacherInput.checked = true;
+        }
+
+        // Caps lock warning
+        const passwordInput = document.getElementById('password');
+        const capsWarning = document.getElementById('capsWarning');
+
+        passwordInput.addEventListener('keyup', (e) => {
+            if (e.getModifierState('CapsLock')) {
+                capsWarning.style.display = 'block';
+            } else {
+                capsWarning.style.display = 'none';
+            }
+        });
+
         // Login Form Submission
         document.getElementById('loginForm').addEventListener('submit', function(e) {
             e.preventDefault();
             
-            const teacherId = document.getElementById('teacherId').value.trim();
-            const password = document.getElementById('password').value;
+            const teacherId = teacherIdInput.value.trim();
+            const password = passwordInput.value;
             const errorDiv = document.getElementById('errorMessage');
             const errorSpan = errorDiv.querySelector('span');
 
@@ -109,6 +150,12 @@
             const TEACHER_PASSWORD = '1234';
 
             if (teacherId === TEACHER_ID && password === TEACHER_PASSWORD) {
+                if (rememberTeacherInput.checked) {
+                    localStorage.setItem('rememberedTeacherId', teacherId);
+                } else {
+                    localStorage.removeItem('rememberedTeacherId');
+                }
+
                 // Store session
                 sessionStorage.setItem('teacherLoggedIn', 'true');
                 sessionStorage.setItem('teacherName', teacherId);
@@ -118,7 +165,7 @@
                 
                 // Add loading state
                 const submitBtn = this.querySelector('.btn-login');
-                submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Logging in...';
+                submitBtn.innerHTML = '<i class="fas fa-check-circle"></i> Logging in...';
                 submitBtn.disabled = true;
                 
                 setTimeout(() => {

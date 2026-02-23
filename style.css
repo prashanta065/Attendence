@@ -19,17 +19,20 @@
 
 :root {
     /* Primary Colors */
-    --primary: #4f46e5;
-    --primary-dark: #4338ca;
-    --primary-light: #6366f1;
-    --primary-lighter: #818cf8;
+    --primary: #2f6f67;
+    --primary-dark: #245951;
+    --primary-light: #4a8b81;
+    --primary-lighter: #79a79f;
+    --primary-rgb: 47, 111, 103;
     
     /* Secondary Colors */
-    --secondary: #06b6d4;
-    --success: #10b981;
-    --danger: #ef4444;
-    --warning: #f59e0b;
-    --info: #3b82f6;
+    --secondary: #c17c5d;
+    --success: #2f855a;
+    --danger: #c0564a;
+    --danger-dark: #9c4238;
+    --warning: #b7791f;
+    --info: #2b6cb0;
+    --info-dark: #1f4f82;
     
     /* Neutral Grays */
     --gray-50: #f9fafb;
@@ -45,8 +48,8 @@
     
     /* Backgrounds */
     --bg-primary: #ffffff;
-    --bg-secondary: #f9fafb;
-    --bg-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    --bg-secondary: #f7f5f2;
+    --bg-gradient: linear-gradient(180deg, #f4f7f5 0%, #edf2ef 100%);
     
     /* Text Colors */
     --text-primary: #111827;
@@ -94,9 +97,9 @@
     --container-2xl: 1536px;
     
     /* Transitions */
-    --transition-fast: 150ms cubic-bezier(0.4, 0, 0.2, 1);
-    --transition: 250ms cubic-bezier(0.4, 0, 0.2, 1);
-    --transition-slow: 350ms cubic-bezier(0.4, 0, 0.2, 1);
+    --transition-fast: 120ms ease;
+    --transition: 180ms ease;
+    --transition-slow: 220ms ease;
     
     /* Z-index Scale */
     --z-base: 1;
@@ -130,8 +133,6 @@ body {
    =========================== */
 .header {
     background: rgba(255, 255, 255, 0.98);
-    backdrop-filter: blur(20px);
-    -webkit-backdrop-filter: blur(20px);
     border-bottom: 1px solid var(--gray-200);
     padding: var(--space-5) 0;
     position: sticky;
@@ -167,6 +168,16 @@ body {
     font-weight: 700;
     color: var(--text-primary);
     letter-spacing: -0.025em;
+}
+.school-brand {
+    align-items: flex-start;
+}
+.brand-subtitle {
+    margin-top: 2px;
+    font-size: 0.8125rem;
+    color: var(--text-secondary);
+    font-weight: 500;
+    line-height: 1.3;
 }
 
 .header-actions {
@@ -205,12 +216,11 @@ body {
 
 .btn-teacher:hover {
     background: var(--primary-dark);
-    box-shadow: var(--shadow);
-    transform: translateY(-1px);
+    box-shadow: var(--shadow-sm);
 }
 
 .btn-teacher:active {
-    transform: translateY(0);
+    box-shadow: var(--shadow-xs);
 }
 
 /* ===========================
@@ -240,12 +250,12 @@ body {
    UNIFIED ATTENDANCE CARD
    =========================== */
 .unified-attendance-card {
-    background: linear-gradient(135deg, rgba(255, 255, 255, 0.95) 0%, rgba(249, 250, 251, 0.95) 100%);
+    background: var(--bg-primary);
     border-radius: var(--radius-2xl);
     padding: var(--space-8);
-    box-shadow: 0 20px 60px -15px rgba(0, 0, 0, 0.15);
+    box-shadow: var(--shadow-md);
     margin-bottom: var(--space-8);
-    border: 1px solid rgba(255, 255, 255, 0.8);
+    border: 1px solid var(--gray-200);
 }
 
 .attendance-header {
@@ -280,6 +290,20 @@ body {
     gap: var(--space-8);
 }
 
+.main-content,
+.main-content.fullscreen,
+.unified-attendance-card,
+.attendance-grid,
+.attendance-method,
+.method-card,
+.method-body,
+.search-box,
+.student-card,
+.recent-item,
+.panel-body {
+    min-width: 0;
+}
+
 .attendance-method {
     min-height: 500px;
 }
@@ -290,31 +314,13 @@ body {
     padding: var(--space-6);
     height: 100%;
     border: 2px solid var(--gray-200);
-    transition: all var(--transition-slow);
+    transition: border-color var(--transition), box-shadow var(--transition);
     position: relative;
-    overflow: hidden;
-}
-
-.method-card::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    height: 4px;
-    background: linear-gradient(90deg, var(--primary), var(--primary-light));
-    transform: scaleX(0);
-    transition: transform var(--transition-slow);
-}
-
-.method-card:hover::before {
-    transform: scaleX(1);
 }
 
 .method-card:hover {
     border-color: var(--primary);
-    box-shadow: 0 15px 40px -10px rgba(79, 70, 229, 0.2);
-    transform: translateY(-5px);
+    box-shadow: var(--shadow);
 }
 
 .method-header {
@@ -330,14 +336,14 @@ body {
     width: 60px;
     height: 60px;
     min-width: 60px;
-    background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);
+    background: var(--primary);
     border-radius: var(--radius-lg);
     display: flex;
     align-items: center;
     justify-content: center;
     color: var(--text-white);
     font-size: 1.75rem;
-    box-shadow: 0 8px 20px rgba(79, 70, 229, 0.3);
+    box-shadow: 0 8px 20px rgba(var(--primary-rgb), 0.3);
 }
 
 .method-header h3 {
@@ -361,11 +367,11 @@ body {
    RECENT ACTIVITY PANEL
    =========================== */
 .recent-activity-panel {
-    background: linear-gradient(135deg, rgba(255, 255, 255, 0.95) 0%, rgba(249, 250, 251, 0.95) 100%);
+    background: var(--bg-primary);
     border-radius: var(--radius-2xl);
     padding: var(--space-6);
-    box-shadow: 0 15px 40px -10px rgba(0, 0, 0, 0.1);
-    border: 1px solid rgba(255, 255, 255, 0.8);
+    box-shadow: var(--shadow-md);
+    border: 1px solid var(--gray-200);
 }
 
 .panel-header {
@@ -392,12 +398,12 @@ body {
 
 .badge {
     padding: var(--space-2) var(--space-4);
-    background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);
+    background: var(--primary);
     color: var(--text-white);
     border-radius: var(--radius-full);
     font-size: 0.875rem;
     font-weight: 600;
-    box-shadow: 0 4px 12px rgba(79, 70, 229, 0.3);
+    box-shadow: 0 4px 12px rgba(var(--primary-rgb), 0.3);
 }
 
 .panel-body {
@@ -477,7 +483,7 @@ body {
 }
 
 .btn:active {
-    transform: scale(0.97);
+    transform: none;
 }
 
 .btn:disabled {
@@ -493,8 +499,7 @@ body {
 
 .btn-primary:hover:not(:disabled) {
     background: var(--primary-dark);
-    box-shadow: var(--shadow);
-    transform: translateY(-1px);
+    box-shadow: var(--shadow-sm);
 }
 
 .btn-secondary {
@@ -513,8 +518,7 @@ body {
 
 .btn-success:hover:not(:disabled) {
     background: #059669;
-    box-shadow: var(--shadow);
-    transform: translateY(-1px);
+    box-shadow: var(--shadow-sm);
 }
 
 .btn-danger {
@@ -523,9 +527,8 @@ body {
 }
 
 .btn-danger:hover:not(:disabled) {
-    background: #dc2626;
-    box-shadow: var(--shadow);
-    transform: translateY(-1px);
+    background: var(--danger-dark);
+    box-shadow: var(--shadow-sm);
 }
 
 .btn-search {
@@ -535,7 +538,7 @@ body {
 }
 
 .btn-search:hover:not(:disabled) {
-    background: #2563eb;
+    background: var(--info-dark);
 }
 
 /* ===========================
@@ -559,6 +562,15 @@ body {
     margin: var(--space-5) 0;
     border: 3px solid var(--primary);
     box-shadow: var(--shadow);
+    width: 100%;
+    max-width: 100%;
+}
+
+#qr-reader video,
+#qr-reader img,
+#qr-reader canvas {
+    width: 100% !important;
+    height: auto !important;
 }
 
 .upload-section {
@@ -582,7 +594,6 @@ body {
 .upload-label:hover {
     background: var(--gray-100);
     border-color: var(--primary);
-    transform: translateY(-2px);
 }
 
 .upload-label i {
@@ -596,6 +607,7 @@ body {
     color: var(--text-primary);
     font-size: 1rem;
     text-align: center;
+    overflow-wrap: anywhere;
 }
 
 /* ===========================
@@ -605,6 +617,11 @@ body {
     display: flex;
     gap: var(--space-3);
     margin-bottom: var(--space-6);
+}
+
+.search-box .input-field,
+.search-box .btn-search {
+    min-width: 0;
 }
 
 .input-field,
@@ -634,9 +651,8 @@ body {
     outline: none;
     border-color: var(--primary);
     background: var(--bg-primary);
-    box-shadow: 0 0 0 4px rgba(79, 70, 229, 0.1),
+    box-shadow: 0 0 0 4px rgba(var(--primary-rgb), 0.1),
                 0 4px 12px rgba(0, 0, 0, 0.05);
-    transform: translateY(-2px);
 }
 
 /* Login page specific input styling */
@@ -657,11 +673,11 @@ body {
 .login-page .form-input:focus {
     border-color: var(--primary);
     background: var(--bg-primary);
-    box-shadow: 0 0 0 4px rgba(79, 70, 229, 0.1);
+    box-shadow: 0 0 0 4px rgba(var(--primary-rgb), 0.1);
 }
 
 .student-card {
-    background: linear-gradient(135deg, rgba(79, 70, 229, 0.08) 0%, rgba(99, 102, 241, 0.08) 100%);
+    background: var(--gray-50);
     padding: var(--space-6);
     border-radius: var(--radius-lg);
     display: flex;
@@ -669,26 +685,14 @@ body {
     align-items: center;
     margin-bottom: var(--space-5);
     border: 2px solid var(--primary-light);
-    animation: slideIn var(--transition-slow) ease;
-    box-shadow: 0 4px 12px rgba(79, 70, 229, 0.1);
-}
-
-@keyframes slideIn {
-    from {
-        opacity: 0;
-        transform: translateY(-10px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
+    box-shadow: 0 4px 12px rgba(var(--primary-rgb), 0.1);
 }
 
 .student-avatar {
     width: 80px;
     height: 80px;
     min-width: 80px;
-    background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);
+    background: var(--primary);
     border-radius: var(--radius-lg);
     display: flex;
     align-items: center;
@@ -767,7 +771,6 @@ body {
 .recent-item:hover {
     background: var(--bg-primary);
     box-shadow: var(--shadow-sm);
-    transform: translateX(4px);
 }
 
 .recent-info {
@@ -821,7 +824,6 @@ body {
     align-items: center;
     gap: var(--space-3);
     z-index: var(--z-tooltip);
-    animation: toastSlide var(--transition-slow) ease;
     max-width: 400px;
     border-left: 4px solid;
     font-weight: 500;
@@ -846,17 +848,6 @@ body {
     color: var(--info);
 }
 
-@keyframes toastSlide {
-    from {
-        transform: translateX(400px);
-        opacity: 0;
-    }
-    to {
-        transform: translateX(0);
-        opacity: 1;
-    }
-}
-
 /* ===========================
    LOGIN PAGE
    =========================== */
@@ -868,23 +859,38 @@ body {
     position: relative;
     overflow-y: auto;
     padding: var(--space-8) var(--space-4);
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    background: var(--bg-gradient);
 }
 
 .login-container {
     position: relative;
     z-index: 10;
     width: 100%;
-    max-width: 450px;
+    max-width: 520px;
     margin: auto;
 }
 
 .login-card {
     background: #ffffff;
     border-radius: var(--radius-2xl);
-    padding: var(--space-10) var(--space-8);
-    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
+    padding: var(--space-8) var(--space-7);
+    box-shadow: var(--shadow-lg);
     position: relative;
+    border: 1px solid var(--gray-200);
+}
+.login-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-2);
+    background: rgba(var(--primary-rgb), 0.1);
+    color: var(--primary-dark);
+    font-weight: 600;
+    font-size: 0.75rem;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    padding: var(--space-2) var(--space-3);
+    border-radius: var(--radius-full);
+    margin-bottom: var(--space-5);
 }
 
 .login-header {
@@ -895,7 +901,7 @@ body {
 .login-icon {
     width: 85px;
     height: 85px;
-    background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);
+    background: var(--primary);
     border-radius: var(--radius-xl);
     display: flex;
     align-items: center;
@@ -903,15 +909,21 @@ body {
     margin: 0 auto var(--space-5);
     font-size: 2.25rem;
     color: var(--text-white);
-    box-shadow: 0 8px 20px rgba(79, 70, 229, 0.25);
+    box-shadow: 0 8px 20px rgba(var(--primary-rgb), 0.25);
 }
 
 .login-header h1 {
-    font-size: clamp(1.75rem, 3vw, 2.25rem);
+    font-size: clamp(1.2rem, 2.4vw, 1.6rem);
     font-weight: 800;
     color: var(--text-primary);
-    margin-bottom: var(--space-3);
-    letter-spacing: -0.025em;
+    margin-bottom: var(--space-2);
+    letter-spacing: -0.015em;
+}
+.login-tagline {
+    color: var(--primary-dark);
+    font-size: 0.95rem;
+    font-weight: 600;
+    margin-bottom: var(--space-2);
 }
 
 .login-header p {
@@ -971,6 +983,32 @@ body {
 }
 
 .error-message {
+    .caps-warning {
+        display: inline-flex;
+        align-items: center;
+        gap: var(--space-2);
+        color: var(--warning);
+        font-size: 0.8125rem;
+        font-weight: 600;
+        margin-top: var(--space-2);
+    }
+    .login-options {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-bottom: var(--space-4);
+    }
+    .remember-option {
+        display: inline-flex;
+        align-items: center;
+        gap: var(--space-2);
+        color: var(--text-secondary);
+        font-size: 0.875rem;
+        font-weight: 500;
+    }
+    .remember-option input {
+        accent-color: var(--primary);
+    }
     background: rgba(239, 68, 68, 0.1);
     border: 1px solid var(--danger);
     color: var(--danger);
@@ -985,19 +1023,13 @@ body {
 }
 
 .error-message.shake {
-    animation: shake 0.5s;
-}
-
-@keyframes shake {
-    0%, 100% { transform: translateX(0); }
-    25% { transform: translateX(-10px); }
-    75% { transform: translateX(10px); }
+    animation: none;
 }
 
 .btn-login {
     width: 100%;
     padding: var(--space-4);
-    background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);
+    background: var(--primary);
     color: var(--text-white);
     border: none;
     border-radius: var(--radius-lg);
@@ -1010,22 +1042,26 @@ body {
     justify-content: center;
     gap: var(--space-3);
     font-family: inherit;
-    box-shadow: 0 4px 12px rgba(79, 70, 229, 0.3);
+    box-shadow: 0 4px 12px rgba(var(--primary-rgb), 0.3);
 }
 
 .btn-login:hover:not(:disabled) {
-    transform: translateY(-2px);
-    box-shadow: 0 8px 20px rgba(79, 70, 229, 0.4);
-    background: linear-gradient(135deg, var(--primary-dark) 0%, var(--primary) 100%);
+    box-shadow: var(--shadow);
+    background: var(--primary-dark);
 }
 
 .btn-login:active:not(:disabled) {
-    transform: translateY(0);
+    box-shadow: var(--shadow-sm);
 }
 
 .login-footer {
     text-align: center;
     margin-top: var(--space-6);
+}
+.support-note {
+    margin-top: var(--space-3);
+    color: var(--text-secondary);
+    font-size: 0.8125rem;
 }
 
 .back-link {
@@ -1060,9 +1096,29 @@ body {
     background: var(--gray-50);
     min-height: 100vh;
 }
+.school-slogan {
+    color: var(--text-secondary);
+    font-size: 0.8rem;
+    font-weight: 500;
+    line-height: 1.3;
+    margin-top: 2px;
+}
 
 /* Sidebar */
 .sidebar {
+    .mobile-sidebar-overlay {
+        position: fixed;
+        inset: 0;
+        background: rgba(17, 24, 39, 0.35);
+        opacity: 0;
+        visibility: hidden;
+        transition: opacity var(--transition), visibility var(--transition);
+        z-index: 25;
+    }
+    .mobile-sidebar-overlay.active {
+        opacity: 1;
+        visibility: visible;
+    }
     position: fixed;
     left: 0;
     top: 0;
@@ -1086,7 +1142,7 @@ body {
 }
 
 .sidebar-header .logo h2 {
-    font-size: 1.5rem;
+    font-size: 1.2rem;
     font-weight: 700;
     color: var(--text-primary);
 }
@@ -1116,7 +1172,7 @@ body {
     text-decoration: none;
     border-radius: var(--radius-md);
     margin-bottom: var(--space-2);
-    transition: all var(--transition);
+    transition: background-color var(--transition), color var(--transition);
     font-weight: 500;
     font-size: 0.9375rem;
 }
@@ -1152,7 +1208,7 @@ body {
 .user-avatar {
     width: 48px;
     height: 48px;
-    background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);
+    background: var(--primary);
     border-radius: var(--radius-full);
     display: flex;
     align-items: center;
@@ -1215,7 +1271,7 @@ body {
     position: sticky;
     top: 0;
     z-index: var(--z-sticky);
-    border-bottom: 2px solid var(--gray-100);
+    border-bottom: 1px solid var(--gray-200);
     flex-wrap: wrap;
 }
 
@@ -1277,33 +1333,21 @@ body {
     color: var(--text-primary);
     font-size: 0.9375rem;
     padding: var(--space-3) var(--space-5);
-    background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);
+    background: var(--primary);
     color: var(--text-white);
     border-radius: var(--radius-full);
     white-space: nowrap;
-    box-shadow: 0 2px 8px rgba(79, 70, 229, 0.2);
+    box-shadow: 0 2px 8px rgba(var(--primary-rgb), 0.2);
 }
 
 /* Dashboard Sections */
 .section {
     display: none;
     padding: var(--space-6);
-    animation: fadeIn var(--transition-slow) ease;
 }
 
 .section.active {
     display: block;
-}
-
-@keyframes fadeIn {
-    from {
-        opacity: 0;
-        transform: translateY(10px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
 }
 
 /* Dashboard Stats */
@@ -1328,7 +1372,7 @@ body {
 
 .stat-card-lg:hover {
     border-color: var(--primary);
-    box-shadow: 0 8px 24px rgba(79, 70, 229, 0.12);
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.06);
 }
 
 .stat-icon-lg {
@@ -1345,35 +1389,35 @@ body {
 }
 
 .stat-icon-lg.total {
-    background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+    background: var(--info);
 }
 
 .stat-icon-lg.total::after {
-    background: linear-gradient(135deg, #3b82f6, #2563eb);
+    background: var(--info);
 }
 
 .stat-icon-lg.present {
-    background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+    background: var(--success);
 }
 
 .stat-icon-lg.present::after {
-    background: linear-gradient(135deg, #10b981, #059669);
+    background: var(--success);
 }
 
 .stat-icon-lg.absent {
-    background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+    background: var(--danger);
 }
 
 .stat-icon-lg.absent::after {
-    background: linear-gradient(135deg, #ef4444, #dc2626);
+    background: var(--danger);
 }
 
 .stat-icon-lg.records {
-    background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);
+    background: var(--primary);
 }
 
 .stat-icon-lg.records::after {
-    background: linear-gradient(135deg, var(--primary), var(--primary-light));
+    background: var(--primary);
 }
 
 .stat-content {
@@ -1447,11 +1491,10 @@ body {
 }
 
 .action-btn:hover {
-    background: var(--primary);
-    color: var(--text-white);
+    background: var(--gray-100);
+    color: var(--text-primary);
     border-color: var(--primary);
-    transform: translateY(-2px);
-    box-shadow: 0 8px 20px rgba(79, 70, 229, 0.2);
+    box-shadow: var(--shadow-sm);
 }
 
 .action-btn i {
@@ -1522,7 +1565,7 @@ body {
     align-items: center;
     justify-content: center;
     position: relative;
-    box-shadow: 0 8px 24px rgba(79, 70, 229, 0.15);
+    box-shadow: 0 8px 24px rgba(var(--primary-rgb), 0.15);
 }
 
 .circular-progress::before {
@@ -1617,20 +1660,13 @@ body {
     position: absolute;
     bottom: 0;
     width: 100%;
-    background: linear-gradient(180deg, var(--primary-light) 0%, var(--primary) 100%);
+    background: var(--primary-light);
     border-radius: var(--radius-md) var(--radius-md) 0 0;
     transition: height var(--transition-slow);
 }
 
 .trend-day.active .trend-fill {
-    background: linear-gradient(180deg, var(--success) 0%, #059669 100%);
-    animation: fillUp 1s ease;
-}
-
-@keyframes fillUp {
-    from {
-        height: 0%;
-    }
+    background: var(--success);
 }
 
 .trend-percent {
@@ -1656,7 +1692,6 @@ body {
 
 .quick-stat-item:hover {
     background: var(--gray-100);
-    transform: translateX(5px);
 }
 
 .quick-stat-icon {
@@ -1762,7 +1797,7 @@ body {
 }
 
 .attendance-table thead {
-    background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);
+    background: var(--primary);
     color: var(--text-white);
 }
 
@@ -1778,7 +1813,7 @@ body {
 
 .attendance-table tbody tr {
     border-bottom: 1px solid var(--gray-200);
-    transition: all var(--transition);
+    transition: background-color var(--transition);
 }
 
 .attendance-table tbody tr:hover {
@@ -2003,6 +2038,47 @@ body {
 
 /* Mobile devices (max 767px) */
 @media (max-width: 767px) {
+    .main-content.fullscreen {
+        padding: var(--space-5) var(--space-4);
+    }
+
+    .unified-attendance-card {
+        padding: var(--space-5);
+        border-radius: var(--radius-xl);
+        margin-bottom: var(--space-5);
+    }
+
+    .attendance-header {
+        margin-bottom: var(--space-6);
+    }
+
+    .attendance-header p {
+        font-size: 0.95rem;
+    }
+
+    .method-card {
+        padding: var(--space-5);
+    }
+
+    .method-header {
+        gap: var(--space-3);
+        margin-bottom: var(--space-5);
+    }
+
+    .method-header h3 {
+        font-size: 1.25rem;
+    }
+
+    .method-icon {
+        width: 52px;
+        height: 52px;
+        min-width: 52px;
+        font-size: 1.35rem;
+    }
+
+    body.sidebar-open {
+        overflow: hidden;
+    }
     .header-content {
         justify-content: center;
     }
@@ -2019,7 +2095,7 @@ body {
     }
     
     .attendance-grid {
-        grid-template-columns: 1fr;
+        grid-template-columns: minmax(0, 1fr);
         gap: var(--space-6);
     }
     
@@ -2042,6 +2118,7 @@ body {
     
     .action-buttons .btn {
         width: 100%;
+        min-width: 0;
     }
     
     .recent-item {
@@ -2066,11 +2143,16 @@ body {
     }
     
     .sidebar {
+        width: min(85vw, 340px);
         transform: translateX(-100%);
+        z-index: 30;
     }
     
     .sidebar.active {
         transform: translateX(0);
+    }
+    .school-slogan {
+        font-size: 0.75rem;
     }
     
     .dashboard-content {
@@ -2083,7 +2165,7 @@ body {
     }
     
     .topbar h1 {
-        font-size: 1.25rem;
+        font-size: 1.1rem;
     }
     
     .action-grid {
@@ -2127,6 +2209,22 @@ body {
 
 /* Small mobile devices (max 480px) */
 @media (max-width: 480px) {
+    .brand-subtitle {
+        font-size: 0.75rem;
+    }
+
+    .school-slogan {
+        display: none;
+    }
+    .login-badge {
+        font-size: 0.68rem;
+    }
+    .login-header h1 {
+        font-size: 1.05rem;
+    }
+    .login-tagline {
+        font-size: 0.85rem;
+    }
     .logo h1 {
         font-size: 1.125rem;
     }
@@ -2140,12 +2238,61 @@ body {
         font-size: 0.8125rem;
     }
     
+    .main-content.fullscreen {
+        padding: var(--space-4) var(--space-3);
+    }
+
+    .unified-attendance-card {
+        padding: var(--space-4);
+    }
+
+    .attendance-grid {
+        gap: var(--space-4);
+    }
+
+    .btn-teacher {
+        width: 100%;
+        justify-content: center;
+    }
+
     .main-content {
         padding: var(--space-4) var(--space-3);
     }
     
     .search-box {
         flex-direction: column;
+    }
+
+    .main-content,
+    .main-content.fullscreen {
+        padding-left: var(--space-2);
+        padding-right: var(--space-2);
+    }
+
+    .unified-attendance-card,
+    .recent-activity-panel {
+        padding: var(--space-3);
+        border-radius: var(--radius-lg);
+    }
+
+    .method-card {
+        padding: var(--space-4);
+    }
+
+    .method-header {
+        flex-wrap: wrap;
+        align-items: center;
+    }
+
+    .method-header h3 {
+        font-size: 1.125rem;
+        line-height: 1.3;
+    }
+
+    .attendance-header h2 {
+        flex-wrap: wrap;
+        justify-content: center;
+        text-align: center;
     }
     
     .upload-label {
@@ -2155,6 +2302,38 @@ body {
     
     .upload-label i {
         font-size: 2.5rem;
+    }
+}
+
+/* Extra small devices (max 360px) */
+@media (max-width: 360px) {
+    .header-content,
+    .header-actions {
+        gap: var(--space-2);
+    }
+
+    .logo h1 {
+        font-size: 1rem;
+    }
+
+    .date-time {
+        font-size: 0.8125rem;
+        padding: var(--space-2) var(--space-3);
+    }
+
+    .btn,
+    .btn-teacher,
+    .btn-search {
+        font-size: 0.8125rem;
+    }
+
+    .upload-label {
+        min-height: 140px;
+        padding: var(--space-6) var(--space-3);
+    }
+
+    .upload-label span {
+        font-size: 0.9375rem;
     }
 }
 
@@ -2241,3 +2420,2961 @@ body {
         transition-duration: 0.01ms !important;
     }
 }
+
+/* =====================================================
+   2026 FULL UI REDESIGN OVERRIDES
+   Clean school look | Fully responsive
+   ===================================================== */
+
+:root {
+    --brand-1: #0f766e;
+    --brand-2: #115e59;
+    --brand-3: #0d9488;
+    --paper: #f8fafc;
+    --line: #dbe3ea;
+    --ink: #0f172a;
+    --muted: #5f6b7a;
+}
+
+body,
+.main-page,
+.dashboard-page,
+.login-page {
+    background: radial-gradient(circle at top right, #e6f4f1 0%, #f5f8fb 35%, #f8fafc 100%);
+    color: var(--ink);
+}
+
+body.sidebar-open {
+    overflow: hidden;
+}
+
+.header {
+    background: rgba(255, 255, 255, 0.92);
+    backdrop-filter: blur(8px);
+    border-bottom: 1px solid var(--line);
+    box-shadow: 0 4px 20px rgba(15, 23, 42, 0.06);
+}
+
+.header-content,
+.main-content.fullscreen,
+.main-content,
+.dashboard-content {
+    width: 100%;
+    min-width: 0;
+}
+
+.logo i {
+    color: var(--brand-1);
+}
+
+.logo h1,
+.sidebar-header .logo h2 {
+    color: var(--ink);
+}
+
+.brand-subtitle,
+.school-slogan,
+.login-tagline,
+.support-note {
+    color: var(--muted);
+}
+
+.btn,
+.btn-teacher,
+.action-btn {
+    border-radius: 14px;
+    font-weight: 600;
+    transition: background-color 140ms ease, color 140ms ease, border-color 140ms ease, box-shadow 140ms ease;
+}
+
+.btn-teacher,
+.btn-primary,
+.btn-login,
+.nav-item.active,
+.badge,
+.date-display {
+    background: linear-gradient(135deg, var(--brand-1), var(--brand-3)) !important;
+    color: #fff !important;
+    border: none;
+}
+
+.btn-secondary {
+    background: #334155;
+}
+
+.btn-success {
+    background: #15803d;
+}
+
+.btn-danger {
+    background: #b91c1c;
+}
+
+.btn-search {
+    background: #0f4c81;
+}
+
+.btn:hover,
+.btn-teacher:hover,
+.action-btn:hover,
+.nav-item:hover {
+    box-shadow: 0 8px 20px rgba(15, 23, 42, 0.12);
+}
+
+.unified-attendance-card,
+.recent-activity-panel,
+.method-card,
+.quick-actions,
+.recent-section,
+.records-header,
+.analytics-card,
+.stat-card-lg,
+.table-container,
+.login-card,
+.sidebar,
+.topbar {
+    background: #ffffff;
+    border: 1px solid var(--line);
+    box-shadow: 0 10px 30px rgba(15, 23, 42, 0.08);
+}
+
+.unified-attendance-card,
+.recent-activity-panel,
+.quick-actions,
+.recent-section,
+.records-header,
+.analytics-card,
+.login-card,
+.stat-card-lg,
+.method-card {
+    border-radius: 20px;
+}
+
+.attendance-header {
+    text-align: left;
+    margin-bottom: 26px;
+}
+
+.attendance-header h2 {
+    font-size: clamp(1.3rem, 2.6vw, 2rem);
+    color: var(--ink);
+}
+
+.attendance-header p {
+    color: var(--muted);
+}
+
+.attendance-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 20px;
+}
+
+.method-card {
+    height: auto;
+    min-height: 100%;
+    padding: 22px;
+}
+
+.method-icon,
+.student-avatar,
+.user-avatar {
+    background: linear-gradient(135deg, var(--brand-1), var(--brand-3));
+    color: #fff;
+    box-shadow: 0 8px 18px rgba(15, 118, 110, 0.24);
+}
+
+.scanner-controls,
+.action-buttons,
+.search-box,
+.filters,
+.action-grid,
+.analytics-info {
+    min-width: 0;
+}
+
+#qr-reader {
+    width: 100%;
+    max-width: 100%;
+    border: 2px solid #cfe8e5;
+    border-radius: 16px;
+    overflow: hidden;
+}
+
+#qr-reader video,
+#qr-reader canvas,
+#qr-reader img {
+    width: 100% !important;
+    height: auto !important;
+}
+
+.upload-label {
+    border: 2px dashed #b7d8d3;
+    border-radius: 16px;
+    background: #f7fbfa;
+}
+
+.upload-label i {
+    color: var(--brand-1);
+}
+
+.input-field,
+.form-input,
+.filter-input,
+select.filter-input {
+    border: 1px solid #cfd8e3;
+    border-radius: 14px;
+    color: var(--ink);
+    background: #fff;
+}
+
+.input-field:focus,
+.form-input:focus,
+.filter-input:focus,
+select.filter-input:focus {
+    border-color: var(--brand-3);
+    box-shadow: 0 0 0 3px rgba(13, 148, 136, 0.16);
+}
+
+.student-card {
+    background: #f8fbfd;
+    border: 1px solid #d8e4ef;
+}
+
+.student-details p,
+.recent-info p,
+.info-label,
+.user-role,
+.date-time {
+    color: var(--muted);
+}
+
+.recent-item,
+.quick-stat-item,
+.info-item {
+    background: #f8fafc;
+    border: 1px solid #e2e8f0;
+    border-radius: 14px;
+}
+
+.recent-status,
+.status-badge {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 6px 12px;
+    border-radius: 999px;
+    font-size: 0.8rem;
+    font-weight: 700;
+}
+
+.recent-status.present,
+.status-badge.present {
+    background: rgba(22, 163, 74, 0.12);
+    color: #166534;
+}
+
+.recent-status.absent,
+.status-badge.absent {
+    background: rgba(185, 28, 28, 0.12);
+    color: #991b1b;
+}
+
+.sidebar {
+    width: 300px;
+    border-right: 1px solid var(--line);
+}
+
+.sidebar-header,
+.sidebar-footer {
+    border-color: var(--line);
+}
+
+.sidebar-nav {
+    padding-top: 14px;
+}
+
+.nav-item {
+    border: 1px solid transparent;
+    color: #445164;
+}
+
+.nav-item:hover {
+    background: #f1f5f9;
+    border-color: #dde5ee;
+}
+
+.mobile-sidebar-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(2, 6, 23, 0.45);
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 160ms ease;
+    z-index: 35;
+}
+
+.mobile-sidebar-overlay.active {
+    opacity: 1;
+    visibility: visible;
+}
+
+.dashboard-content {
+    margin-left: 300px;
+}
+
+.topbar {
+    padding: 18px 24px;
+    border-radius: 0;
+    border-top: none;
+    border-left: none;
+    border-right: none;
+}
+
+.topbar-left {
+    min-width: 0;
+}
+
+.topbar h1 {
+    color: var(--ink);
+    line-height: 1.2;
+}
+
+.school-slogan {
+    margin-top: 3px;
+    font-size: 0.8rem;
+}
+
+.dashboard-stats {
+    gap: 16px;
+}
+
+.stat-card-lg {
+    gap: 14px;
+    padding: 18px;
+}
+
+.stat-icon-lg {
+    width: 58px;
+    height: 58px;
+    min-width: 58px;
+    font-size: 1.4rem;
+}
+
+.stat-icon-lg.total { background: #0369a1; }
+.stat-icon-lg.present { background: #15803d; }
+.stat-icon-lg.absent { background: #b91c1c; }
+.stat-icon-lg.records { background: var(--brand-2); }
+
+.quick-actions h3,
+.recent-section h3,
+.records-header h2,
+.analytics-header h3,
+.panel-header h3 {
+    color: var(--ink);
+}
+
+.action-btn {
+    background: #fff;
+    border: 1px solid #d7e2ec;
+    color: #1e293b;
+}
+
+.action-btn:hover {
+    background: #f8fafc;
+    color: #0f172a;
+    border-color: #b9c9d9;
+}
+
+.circular-progress {
+    box-shadow: 0 10px 24px rgba(15, 23, 42, 0.12);
+}
+
+.table-container {
+    border-radius: 16px;
+}
+
+.attendance-table {
+    min-width: 720px;
+}
+
+.attendance-table thead {
+    background: #0f172a;
+    color: #fff;
+}
+
+.attendance-table tbody tr:hover {
+    background: #f8fafc;
+}
+
+.no-records {
+    background: #fff;
+    border: 1px dashed #cbd5e1;
+    border-radius: 16px;
+    padding: 24px;
+    text-align: center;
+    color: var(--muted);
+}
+
+.toast {
+    border-left-width: 5px;
+    border-radius: 12px;
+    box-shadow: 0 16px 30px rgba(15, 23, 42, 0.22);
+}
+
+/* Login redesign */
+.login-page {
+    align-items: center;
+    padding: 20px;
+}
+
+.login-container {
+    max-width: 560px;
+}
+
+.login-card {
+    position: relative;
+    overflow: hidden;
+}
+
+.login-card::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 0;
+    right: 0;
+    height: 6px;
+    background: linear-gradient(90deg, var(--brand-1), var(--brand-3));
+}
+
+.login-badge {
+    background: rgba(15, 118, 110, 0.12);
+    color: var(--brand-2);
+}
+
+.login-header {
+    margin-bottom: 24px;
+}
+
+.login-header h1 {
+    line-height: 1.25;
+}
+
+.login-icon {
+    width: 72px;
+    height: 72px;
+    border-radius: 16px;
+}
+
+.login-options {
+    margin-top: 2px;
+}
+
+.caps-warning {
+    color: #9a3412;
+}
+
+.back-link {
+    color: var(--brand-2);
+}
+
+/* Remove old decorative motion globally */
+.student-card,
+.section,
+.toast,
+.recent-item,
+.action-btn,
+.quick-stat-item,
+.method-card,
+.btn,
+.btn-teacher,
+.btn-login {
+    animation: none !important;
+}
+
+/* ===========================
+   RESPONSIVE REDESIGN
+   =========================== */
+
+@media (max-width: 1200px) {
+    .attendance-grid {
+        grid-template-columns: minmax(0, 1fr);
+    }
+
+    .dashboard-stats {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+}
+
+@media (max-width: 900px) {
+    .dashboard-content {
+        margin-left: 0;
+    }
+
+    .sidebar {
+        transform: translateX(-100%);
+        width: min(88vw, 340px);
+        z-index: 40;
+    }
+
+    .sidebar.active {
+        transform: translateX(0);
+    }
+
+    .mobile-toggle,
+    .sidebar-toggle {
+        display: block;
+    }
+
+    .topbar {
+        padding: 14px 16px;
+    }
+
+    .topbar h1 {
+        font-size: 1.1rem;
+    }
+
+    .school-slogan {
+        font-size: 0.72rem;
+        white-space: normal;
+    }
+
+    .dashboard-stats {
+        grid-template-columns: minmax(0, 1fr);
+    }
+
+    .filters {
+        flex-direction: column;
+    }
+
+    .filter-group {
+        width: 100%;
+        min-width: 0;
+    }
+}
+
+@media (max-width: 767px) {
+    .header {
+        position: static;
+    }
+
+    .header-content,
+    .header-actions {
+        justify-content: center;
+        text-align: center;
+    }
+
+    .date-time {
+        width: 100%;
+    }
+
+    .main-content,
+    .main-content.fullscreen {
+        padding: 12px;
+    }
+
+    .unified-attendance-card,
+    .recent-activity-panel,
+    .quick-actions,
+    .recent-section,
+    .records-header,
+    .analytics-card,
+    .method-card,
+    .login-card,
+    .stat-card-lg {
+        border-radius: 16px;
+        padding: 14px;
+    }
+
+    .method-header {
+        gap: 10px;
+        flex-wrap: wrap;
+    }
+
+    .method-icon {
+        width: 48px;
+        height: 48px;
+        min-width: 48px;
+        font-size: 1.2rem;
+    }
+
+    .method-header h3 {
+        font-size: 1.05rem;
+    }
+
+    .search-box,
+    .scanner-controls,
+    .action-buttons {
+        flex-direction: column;
+    }
+
+    .search-box .btn-search,
+    .action-buttons .btn,
+    .scanner-controls .btn,
+    .btn-teacher {
+        width: 100%;
+        min-width: 0;
+    }
+
+    .student-card {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .panel-body {
+        max-height: none;
+    }
+
+    .attendance-table {
+        min-width: 650px;
+    }
+
+    .login-container {
+        max-width: 100%;
+    }
+
+    .login-header h1 {
+        font-size: 1rem;
+    }
+
+    .login-tagline {
+        font-size: 0.82rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .logo i {
+        font-size: 1.35rem;
+    }
+
+    .logo h1 {
+        font-size: 0.95rem;
+    }
+
+    .brand-subtitle {
+        font-size: 0.7rem;
+    }
+
+    .school-slogan {
+        display: none;
+    }
+
+    .btn,
+    .btn-teacher,
+    .btn-login {
+        font-size: 0.82rem;
+        padding: 10px 12px;
+    }
+
+    .upload-label {
+        min-height: 140px;
+        padding: 18px 10px;
+    }
+
+    .upload-label span {
+        font-size: 0.9rem;
+        overflow-wrap: anywhere;
+    }
+
+    .date-display,
+    .date-time {
+        font-size: 0.78rem;
+        padding: 8px 10px;
+    }
+}
+
+@media (max-width: 360px) {
+    .main-content,
+    .main-content.fullscreen {
+        padding: 8px;
+    }
+
+    .unified-attendance-card,
+    .recent-activity-panel,
+    .method-card,
+    .login-card,
+    .stat-card-lg,
+    .quick-actions,
+    .recent-section,
+    .records-header,
+    .analytics-card {
+        padding: 12px;
+    }
+
+    .logo h1 {
+        font-size: 0.88rem;
+    }
+
+    .brand-subtitle {
+        font-size: 0.66rem;
+    }
+
+    .method-header h3,
+    .panel-header h3,
+    .quick-actions h3,
+    .recent-section h3,
+    .records-header h2 {
+        font-size: 1rem;
+    }
+}
+
+/* =====================================================
+   Butwal Hacks Navbar + Login Refresh
+   ===================================================== */
+
+.navbar-brand-pro {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    min-width: 0;
+}
+
+.brand-logo-link,
+.login-logo-link {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    text-decoration: none;
+    outline: none;
+}
+
+.brand-logo-img {
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    object-fit: cover;
+    box-shadow: 0 6px 14px rgba(15, 23, 42, 0.12);
+    background: transparent;
+    flex-shrink: 0;
+    transition: transform 180ms ease, box-shadow 180ms ease, filter 180ms ease;
+}
+
+.brand-title-wrap {
+    min-width: 0;
+}
+
+.brand-title-wrap h1,
+.brand-title-wrap h2,
+.brand-title-wrap p {
+    margin: 0;
+    line-height: 1.2;
+}
+
+.brand-title-wrap h1 {
+    font-size: clamp(1.1rem, 2.2vw, 1.55rem);
+    font-weight: 800;
+    color: #0f172a;
+    letter-spacing: -0.015em;
+}
+
+.brand-title-wrap h2 {
+    font-size: clamp(0.86rem, 1.4vw, 1.02rem);
+    color: #334155;
+    font-weight: 600;
+    margin-top: 2px;
+}
+
+.brand-subtitle {
+    margin-top: 4px;
+    font-size: 0.8rem;
+    color: #64748b;
+}
+
+.header {
+    padding: 14px 0;
+}
+
+.header-content {
+    flex-wrap: nowrap;
+    align-items: center;
+    gap: 18px;
+}
+
+.header-actions {
+    margin-left: auto;
+    flex-shrink: 0;
+}
+
+.date-time {
+    background: #eef2f7;
+    color: #475569;
+    border: 1px solid #d9e2ec;
+    border-radius: 14px;
+}
+
+.btn-teacher {
+    border-radius: 16px;
+    padding: 12px 24px;
+}
+
+.sidebar .brand-logo-img {
+    width: 42px;
+    height: 42px;
+    border-radius: 50%;
+}
+
+.sidebar .brand-title-wrap h2 {
+    font-size: 1rem;
+}
+
+/* Login redesign */
+.login-container {
+    max-width: 580px;
+}
+
+.login-card {
+    border-radius: 24px;
+    padding: 28px 28px 24px;
+}
+
+.login-logo-wrap {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 10px;
+}
+
+.login-logo-img {
+    width: 72px;
+    height: 72px;
+    border-radius: 50%;
+    object-fit: cover;
+    background: transparent;
+    box-shadow: 0 10px 20px rgba(15, 23, 42, 0.15);
+    transition: transform 180ms ease, box-shadow 180ms ease, filter 180ms ease;
+}
+
+.brand-logo-link:hover .brand-logo-img,
+.login-logo-link:hover .login-logo-img {
+    transform: scale(1.08);
+}
+
+.brand-logo-link:active .brand-logo-img,
+.login-logo-link:active .login-logo-img {
+    transform: scale(0.98);
+}
+
+.brand-logo-link:focus-visible,
+.login-logo-link:focus-visible {
+    box-shadow: 0 0 0 3px rgba(13, 148, 136, 0.25);
+}
+
+.login-header h1 {
+    font-size: clamp(1.4rem, 3vw, 1.8rem);
+    margin-bottom: 2px;
+}
+
+.login-system-title {
+    font-size: clamp(0.95rem, 2.2vw, 1.2rem);
+    color: #334155;
+    font-weight: 700;
+    margin-bottom: 6px;
+}
+
+.login-header h1 {
+    font-size: clamp(1.25rem, 2.8vw, 1.7rem);
+}
+
+.login-tagline {
+    margin-bottom: 8px;
+}
+
+@media (max-width: 1024px) {
+    .header-content {
+        flex-wrap: wrap;
+    }
+
+    .header-actions {
+        margin-left: 0;
+    }
+}
+
+@media (max-width: 767px) {
+    .header {
+        padding: 10px 0;
+    }
+
+    .header-content {
+        align-items: stretch;
+        gap: 12px;
+    }
+
+    .navbar-brand-pro {
+        align-items: center;
+        justify-content: flex-start;
+    }
+
+    .brand-logo-img {
+        width: 46px;
+        height: 46px;
+        border-radius: 50%;
+        background: transparent;
+        padding: 0;
+        box-shadow: 0 6px 14px rgba(15, 23, 42, 0.12);
+    }
+
+    .login-logo-img {
+        border-radius: 50%;
+        background: transparent;
+        padding: 0;
+        box-shadow: 0 10px 20px rgba(15, 23, 42, 0.15);
+    }
+
+    .brand-title-wrap h1 {
+        font-size: 1rem;
+    }
+
+    .brand-title-wrap h2 {
+        font-size: 0.86rem;
+    }
+
+    .brand-subtitle {
+        font-size: 0.72rem;
+    }
+
+    .header-actions {
+        width: 100%;
+        justify-content: center;
+        gap: 10px;
+    }
+
+    .date-time {
+        width: auto;
+    }
+
+    .btn-teacher {
+        width: auto;
+        min-width: 180px;
+    }
+
+    .login-card {
+        padding: 22px 16px 18px;
+        border-radius: 18px;
+    }
+
+    .login-logo-img {
+        width: 62px;
+        height: 62px;
+    }
+}
+
+@media (max-width: 430px) {
+    .header-actions {
+        flex-direction: column;
+    }
+
+    .date-time,
+    .btn-teacher {
+        width: 100%;
+        justify-content: center;
+    }
+
+    .brand-title-wrap h1 {
+        font-size: 0.92rem;
+    }
+
+    .brand-title-wrap h2 {
+        font-size: 0.8rem;
+    }
+
+    .brand-logo-img {
+        width: 64px;
+        height: 64px;
+    }
+}
+
+/* =====================================================
+   Teacher Dashboard Final Fix (Visibility + White Text)
+   ===================================================== */
+
+body.dashboard-page {
+    --teacher-sidebar-width: 300px;
+    overflow-x: auto !important;
+    background: #fff5f5 !important;
+    color: #7f1d1d !important;
+}
+
+body.dashboard-page .sidebar {
+    width: var(--teacher-sidebar-width) !important;
+    background: linear-gradient(180deg, #ef4444 0%, #dc2626 50%, #b91c1c 100%) !important;
+    color: #ffffff !important;
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+
+body.dashboard-page .sidebar * {
+    color: #ffffff !important;
+}
+
+body.dashboard-page .nav-item {
+    color: #ffffff !important;
+    background: transparent !important;
+    border: 1px solid transparent !important;
+}
+
+body.dashboard-page .nav-item i,
+body.dashboard-page .nav-item span {
+    color: #ffffff !important;
+}
+
+body.dashboard-page .nav-item:hover {
+    background: rgba(255, 255, 255, 0.16) !important;
+    border-color: rgba(255, 255, 255, 0.35) !important;
+}
+
+body.dashboard-page .nav-item.active,
+body.dashboard-page .nav-item.active:hover {
+    background: #ffffff !important;
+    color: #dc2626 !important;
+    border-color: #ffffff !important;
+}
+
+body.dashboard-page .nav-item.active i,
+body.dashboard-page .nav-item.active span {
+    color: #dc2626 !important;
+}
+
+body.dashboard-page .user-avatar,
+body.dashboard-page .btn-logout,
+body.dashboard-page .btn-logout span,
+body.dashboard-page .btn-logout i {
+    background: #ffffff !important;
+    color: #dc2626 !important;
+}
+
+body.dashboard-page .dashboard-content {
+    margin-left: var(--teacher-sidebar-width) !important;
+    width: calc(100% - var(--teacher-sidebar-width)) !important;
+    max-width: calc(100% - var(--teacher-sidebar-width)) !important;
+    padding: 20px !important;
+    overflow: visible !important;
+}
+
+body.dashboard-page .topbar,
+body.dashboard-page .dashboard-hero-card,
+body.dashboard-page .dashboard-stats,
+body.dashboard-page .analytics-row,
+body.dashboard-page .quick-actions,
+body.dashboard-page .recent-section,
+body.dashboard-page .records-header,
+body.dashboard-page .table-container {
+    width: 100% !important;
+    max-width: 100% !important;
+    overflow: visible !important;
+}
+
+body.dashboard-page .hero-actions {
+    justify-content: flex-start !important;
+}
+
+body.dashboard-page .hero-btn,
+body.dashboard-page .action-btn {
+    white-space: normal;
+}
+
+body.dashboard-page .topbar h1,
+body.dashboard-page .school-slogan,
+body.dashboard-page .hero-copy h2,
+body.dashboard-page .hero-copy p,
+body.dashboard-page .stat-content h2,
+body.dashboard-page .stat-content p,
+body.dashboard-page .analytics-header h3,
+body.dashboard-page .trend-title,
+body.dashboard-page .trend-value,
+body.dashboard-page .trend-note,
+body.dashboard-page .recent-section h3,
+body.dashboard-page .records-header h2,
+body.dashboard-page .attendance-table th,
+body.dashboard-page .attendance-table td,
+body.dashboard-page .filter-input,
+body.dashboard-page .info-label,
+body.dashboard-page .info-value,
+body.dashboard-page .recent-info h4,
+body.dashboard-page .recent-info p {
+    color: #7f1d1d !important;
+}
+
+body.dashboard-page .mobile-toggle,
+body.dashboard-page .sidebar-toggle {
+    background: #ffffff !important;
+    border: 1px solid #fecaca !important;
+    color: #dc2626 !important;
+}
+
+body.dashboard-page .mobile-toggle i,
+body.dashboard-page .sidebar-toggle i {
+    color: #dc2626 !important;
+}
+
+@media (max-width: 900px) {
+    body.dashboard-page .sidebar {
+        transform: translateX(-100%);
+        width: min(84vw, 320px) !important;
+        z-index: 1000;
+    }
+
+    body.dashboard-page .sidebar.active {
+        transform: translateX(0);
+    }
+
+    body.dashboard-page .dashboard-content {
+        margin-left: 0 !important;
+        width: 100% !important;
+        max-width: 100% !important;
+        padding: 14px !important;
+    }
+
+    body.dashboard-page .topbar {
+        padding: 14px !important;
+    }
+
+    body.dashboard-page .topbar-right,
+    body.dashboard-page .date-display {
+        width: 100%;
+        justify-content: center;
+    }
+}
+
+@media (max-width: 760px) {
+    body.dashboard-page .dashboard-stats,
+    body.dashboard-page .analytics-row,
+    body.dashboard-page .action-grid,
+    body.dashboard-page .analytics-info {
+        grid-template-columns: 1fr !important;
+    }
+
+    body.dashboard-page .hero-btn,
+    body.dashboard-page .action-btn,
+    body.dashboard-page .filters .filter-group,
+    body.dashboard-page .filters .btn {
+        width: 100%;
+    }
+
+    body.dashboard-page .attendance-table {
+        min-width: 640px;
+    }
+}
+
+@media (max-width: 480px) {
+    body.dashboard-page .topbar h1 {
+        font-size: 1.1rem !important;
+    }
+
+    body.dashboard-page .school-slogan {
+        font-size: 0.78rem !important;
+    }
+
+    body.dashboard-page .dashboard-content {
+        padding: 10px !important;
+    }
+}
+
+/* =====================================================
+   Teacher Dashboard - Simple Clean Final UI
+   ===================================================== */
+
+body.dashboard-page {
+    background: #fff7f7 !important;
+}
+
+body.dashboard-page .dashboard-content {
+    background: transparent !important;
+    padding: 18px !important;
+}
+
+body.dashboard-page .topbar,
+body.dashboard-page .dashboard-hero-card,
+body.dashboard-page .stat-card-lg,
+body.dashboard-page .analytics-card,
+body.dashboard-page .quick-actions,
+body.dashboard-page .recent-section,
+body.dashboard-page .records-header,
+body.dashboard-page .table-container,
+body.dashboard-page .no-records {
+    background: #ffffff !important;
+    border: 1px solid #fecaca !important;
+    box-shadow: 0 6px 16px rgba(127, 29, 29, 0.08) !important;
+    border-radius: 14px !important;
+}
+
+body.dashboard-page .topbar {
+    position: relative;
+    top: 0;
+    padding: 16px 18px !important;
+}
+
+body.dashboard-page .topbar h1,
+body.dashboard-page .school-slogan,
+body.dashboard-page .hero-copy h2,
+body.dashboard-page .hero-copy p,
+body.dashboard-page .stat-content h2,
+body.dashboard-page .stat-content p,
+body.dashboard-page .analytics-header h3,
+body.dashboard-page .trend-title,
+body.dashboard-page .trend-value,
+body.dashboard-page .trend-note,
+body.dashboard-page .recent-section h3,
+body.dashboard-page .records-header h2,
+body.dashboard-page .attendance-table th,
+body.dashboard-page .attendance-table td,
+body.dashboard-page .filter-input,
+body.dashboard-page .info-label,
+body.dashboard-page .info-value,
+body.dashboard-page .recent-info h4,
+body.dashboard-page .recent-info p {
+    color: #7f1d1d !important;
+}
+
+body.dashboard-page .hero-label {
+    background: #fee2e2 !important;
+    color: #b91c1c !important;
+    border-color: #fecaca !important;
+}
+
+body.dashboard-page .hero-actions {
+    justify-content: flex-start !important;
+    gap: 8px !important;
+}
+
+body.dashboard-page .hero-btn {
+    border-radius: 10px !important;
+    font-size: 0.92rem;
+}
+
+body.dashboard-page .hero-btn-primary {
+    background: #dc2626 !important;
+    color: #ffffff !important;
+}
+
+body.dashboard-page .hero-btn-primary span,
+body.dashboard-page .hero-btn-primary i {
+    color: #ffffff !important;
+}
+
+body.dashboard-page .hero-btn-secondary {
+    background: #ffffff !important;
+    border: 1px solid #fca5a5 !important;
+    color: #b91c1c !important;
+}
+
+body.dashboard-page .hero-btn-secondary span,
+body.dashboard-page .hero-btn-secondary i {
+    color: #b91c1c !important;
+}
+
+body.dashboard-page .stat-icon-lg.total,
+body.dashboard-page .stat-icon-lg.present,
+body.dashboard-page .stat-icon-lg.absent,
+body.dashboard-page .stat-icon-lg.records {
+    background: #dc2626 !important;
+    color: #ffffff !important;
+}
+
+body.dashboard-page .stat-icon-lg i {
+    color: #ffffff !important;
+}
+
+body.dashboard-page .action-grid {
+    grid-template-columns: repeat(auto-fit, minmax(170px, 1fr)) !important;
+    gap: 12px !important;
+}
+
+body.dashboard-page .action-btn {
+    background: #ffffff !important;
+    border: 1px solid #fca5a5 !important;
+    color: #7f1d1d !important;
+    min-height: 96px;
+    box-shadow: none !important;
+}
+
+body.dashboard-page .action-btn i {
+    display: inline-flex;
+    width: 38px;
+    height: 38px;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    background: #dc2626 !important;
+    color: #ffffff !important;
+    font-size: 1rem;
+}
+
+body.dashboard-page .action-btn span {
+    color: #7f1d1d !important;
+    font-weight: 700;
+}
+
+body.dashboard-page .action-btn:hover {
+    background: #fff1f2 !important;
+    border-color: #f87171 !important;
+    transform: translateY(-1px);
+}
+
+body.dashboard-page .quick-actions h3 i,
+body.dashboard-page .analytics-header h3 i,
+body.dashboard-page .recent-section h3 i,
+body.dashboard-page .records-header h2 i {
+    color: #dc2626 !important;
+}
+
+body.dashboard-page .attendance-table thead {
+    background: #fee2e2 !important;
+}
+
+body.dashboard-page .attendance-table th {
+    color: #7f1d1d !important;
+}
+
+body.dashboard-page .recent-status.present,
+body.dashboard-page .status-badge.present,
+body.dashboard-page .recent-status.absent,
+body.dashboard-page .status-badge.absent {
+    background: #dc2626 !important;
+    border-color: #dc2626 !important;
+    color: #ffffff !important;
+}
+
+body.dashboard-page .recent-status.present *,
+body.dashboard-page .status-badge.present *,
+body.dashboard-page .recent-status.absent *,
+body.dashboard-page .status-badge.absent * {
+    color: #ffffff !important;
+}
+
+@media (max-width: 900px) {
+    body.dashboard-page .dashboard-content {
+        padding: 12px !important;
+    }
+
+    body.dashboard-page .topbar {
+        padding: 12px !important;
+    }
+
+    body.dashboard-page .dashboard-hero-card {
+        padding: 14px !important;
+    }
+}
+
+@media (max-width: 760px) {
+    body.dashboard-page .action-grid,
+    body.dashboard-page .dashboard-stats,
+    body.dashboard-page .analytics-row {
+        grid-template-columns: 1fr !important;
+    }
+
+    body.dashboard-page .hero-btn,
+    body.dashboard-page .action-btn {
+        width: 100% !important;
+    }
+}
+
+/* Teacher dashboard cleanup: remove glossy line artifacts */
+body.dashboard-page::before,
+body.dashboard-page::after,
+body.dashboard-page .dashboard-content::before,
+body.dashboard-page .dashboard-content::after,
+body.dashboard-page hr {
+    display: none !important;
+    content: none !important;
+}
+
+body.dashboard-page .teacher-avatar-img {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    object-fit: cover;
+    display: block;
+}
+
+body.dashboard-page .sidebar-close {
+    display: none;
+    align-items: center;
+    justify-content: center;
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    border: 1px solid rgba(255, 255, 255, 0.35);
+    background: rgba(255, 255, 255, 0.16);
+    color: #ffffff;
+    cursor: pointer;
+}
+
+body.dashboard-page .sidebar-close i {
+    color: #ffffff !important;
+}
+
+body.dashboard-page .status-edit-controls {
+    display: inline-flex;
+    gap: 6px;
+    flex-wrap: wrap;
+}
+
+body.dashboard-page .btn-status-edit {
+    border: 1px solid #fca5a5;
+    background: #ffffff;
+    color: #b91c1c;
+    font-size: 0.78rem;
+    font-weight: 700;
+    border-radius: 999px;
+    padding: 4px 9px;
+    cursor: pointer;
+    transition: background 160ms ease, color 160ms ease, border-color 160ms ease;
+}
+
+body.dashboard-page .btn-status-edit:hover {
+    background: #fff1f2;
+    border-color: #f87171;
+}
+
+body.dashboard-page .btn-status-edit.active {
+    background: #dc2626;
+    border-color: #dc2626;
+    color: #ffffff;
+}
+
+@media (max-width: 900px) {
+    body.dashboard-page .mobile-sidebar-overlay {
+        position: fixed !important;
+        inset: 0 !important;
+        background: rgba(0, 0, 0, 0.45) !important;
+        opacity: 0;
+        visibility: hidden;
+        transition: opacity 180ms ease;
+        z-index: 999 !important;
+        pointer-events: none;
+    }
+
+    body.dashboard-page .mobile-sidebar-overlay.active {
+        opacity: 1;
+        visibility: visible;
+        pointer-events: auto;
+    }
+
+    body.dashboard-page .sidebar {
+        z-index: 1000 !important;
+    }
+
+    body.dashboard-page .sidebar-close {
+        display: inline-flex;
+    }
+}
+
+@media print {
+    body.dashboard-page .sidebar,
+    body.dashboard-page .topbar,
+    body.dashboard-page #dashboardSection,
+    body.dashboard-page #toast,
+    body.dashboard-page .mobile-sidebar-overlay {
+        display: none !important;
+    }
+
+    body.dashboard-page,
+    body.dashboard-page .dashboard-content {
+        margin: 0 !important;
+        padding: 0 !important;
+        width: 100% !important;
+        max-width: 100% !important;
+        background: #ffffff !important;
+    }
+
+    body.dashboard-page #attendanceSection {
+        display: block !important;
+        visibility: visible !important;
+    }
+
+    body.dashboard-page .records-header {
+        border: none !important;
+        box-shadow: none !important;
+        padding: 0 0 12px 0 !important;
+    }
+
+    body.dashboard-page .records-header .filters {
+        display: none !important;
+    }
+
+    body.dashboard-page .table-container {
+        display: block !important;
+        border: none !important;
+        box-shadow: none !important;
+        overflow: visible !important;
+    }
+
+    body.dashboard-page .attendance-table {
+        width: 100% !important;
+        min-width: 0 !important;
+        border-collapse: collapse;
+    }
+
+    body.dashboard-page .attendance-table th,
+    body.dashboard-page .attendance-table td {
+        color: #111827 !important;
+        background: #ffffff !important;
+        border: 1px solid #d1d5db !important;
+        font-size: 12px;
+    }
+
+    body.dashboard-page .attendance-table th:last-child,
+    body.dashboard-page .attendance-table td:last-child {
+        display: none !important;
+    }
+
+    body.dashboard-page .status-badge {
+        background: transparent !important;
+        color: #111827 !important;
+        border: 1px solid #9ca3af !important;
+    }
+}
+
+/* =====================================================
+   Teacher Dashboard Final Polish
+   ===================================================== */
+
+body.dashboard-page {
+    overflow-x: hidden !important;
+}
+
+body.dashboard-page .sidebar {
+    background: linear-gradient(180deg, #ef4444 0%, #dc2626 52%, #991b1b 100%) !important;
+    border-right: 1px solid rgba(255, 255, 255, 0.24) !important;
+    box-shadow: 12px 0 28px rgba(127, 29, 29, 0.24) !important;
+}
+
+body.dashboard-page .sidebar-header,
+body.dashboard-page .sidebar-footer {
+    border-color: rgba(255, 255, 255, 0.22) !important;
+}
+
+body.dashboard-page .brand-logo-link {
+    border-radius: 16px !important;
+    background: rgba(255, 255, 255, 0.1) !important;
+    border: 1px solid rgba(255, 255, 255, 0.32) !important;
+    padding: 4px !important;
+}
+
+body.dashboard-page .brand-logo-img {
+    width: 52px !important;
+    height: 52px !important;
+    border-radius: 12px !important;
+    object-fit: contain !important;
+    image-rendering: auto;
+    transform: none !important;
+    filter: none !important;
+    box-shadow: 0 8px 18px rgba(15, 23, 42, 0.18) !important;
+}
+
+body.dashboard-page .brand-logo-link:hover .brand-logo-img,
+body.dashboard-page .brand-logo-link:active .brand-logo-img {
+    transform: none !important;
+    filter: none !important;
+}
+
+body.dashboard-page .sidebar .brand-title-wrap h2,
+body.dashboard-page .sidebar .brand-subtitle,
+body.dashboard-page .sidebar .nav-item,
+body.dashboard-page .sidebar .user-name,
+body.dashboard-page .sidebar .user-role {
+    color: #ffffff !important;
+}
+
+body.dashboard-page .nav-item {
+    border: 1px solid transparent !important;
+}
+
+body.dashboard-page .nav-item:hover {
+    background: rgba(255, 255, 255, 0.16) !important;
+    border-color: rgba(255, 255, 255, 0.35) !important;
+}
+
+body.dashboard-page .nav-item.active,
+body.dashboard-page .nav-item.active:hover {
+    background: #ffffff !important;
+    color: #dc2626 !important;
+}
+
+body.dashboard-page .nav-item.active i,
+body.dashboard-page .nav-item.active span {
+    color: #dc2626 !important;
+}
+
+body.dashboard-page .analytics-row {
+    display: grid !important;
+    grid-template-columns: 1fr !important;
+    gap: 0 !important;
+}
+
+body.dashboard-page .analytics-card {
+    width: 100% !important;
+    max-width: 100% !important;
+    min-height: 460px;
+    padding: 20px !important;
+}
+
+body.dashboard-page .analytics-header {
+    border-bottom: 1px solid #fecaca !important;
+    padding-bottom: 10px;
+    margin-bottom: 16px;
+}
+
+body.dashboard-page .analytics-body {
+    display: grid !important;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+    align-items: center;
+}
+
+body.dashboard-page .circular-progress {
+    width: min(320px, 88vw) !important;
+    height: min(320px, 88vw) !important;
+    margin: 0 auto !important;
+}
+
+body.dashboard-page .progress-value {
+    font-size: clamp(2rem, 4vw, 3.3rem) !important;
+}
+
+body.dashboard-page .analytics-info {
+    display: grid !important;
+    grid-template-columns: 1fr;
+    gap: 12px;
+}
+
+body.dashboard-page .info-item {
+    background: #fff7f7;
+    border: 1px solid #fecaca !important;
+    border-radius: 12px;
+    padding: 14px;
+}
+
+body.dashboard-page .records-header .filters {
+    display: grid;
+    grid-template-columns: 1.4fr 1fr 1fr auto;
+    gap: 10px;
+    align-items: center;
+}
+
+body.dashboard-page .records-header .filter-group {
+    width: 100%;
+}
+
+body.dashboard-page .records-header .filter-input,
+body.dashboard-page .records-header #clearFilters {
+    width: 100% !important;
+    min-height: 50px;
+}
+
+@media (max-width: 1050px) {
+    body.dashboard-page .analytics-body {
+        grid-template-columns: 1fr;
+    }
+
+    body.dashboard-page .analytics-card {
+        min-height: auto;
+    }
+
+    body.dashboard-page .records-header .filters {
+        grid-template-columns: 1fr 1fr;
+    }
+}
+
+@media (max-width: 760px) {
+    body.dashboard-page .dashboard-content {
+        padding: 10px !important;
+    }
+
+    body.dashboard-page .topbar {
+        padding: 12px !important;
+    }
+
+    body.dashboard-page .topbar-left,
+    body.dashboard-page .topbar-right {
+        width: 100%;
+    }
+
+    body.dashboard-page .records-header .filters {
+        grid-template-columns: 1fr;
+    }
+
+    body.dashboard-page .records-header #clearFilters {
+        width: 100% !important;
+    }
+
+    body.dashboard-page .action-grid,
+    body.dashboard-page .dashboard-stats {
+        grid-template-columns: 1fr !important;
+    }
+
+    body.dashboard-page .brand-logo-img {
+        width: 48px !important;
+        height: 48px !important;
+    }
+}
+
+/* =====================================================
+   Teacher Dashboard Mobile Critical Fixes
+   ===================================================== */
+
+body.dashboard-page .brand-logo-link {
+    width: 54px !important;
+    height: 54px !important;
+    padding: 0 !important;
+    border-radius: 50% !important;
+    overflow: hidden !important;
+    background: transparent !important;
+    border: none !important;
+}
+
+body.dashboard-page .brand-logo-img {
+    width: 100% !important;
+    height: 100% !important;
+    border-radius: 50% !important;
+    object-fit: cover !important;
+    background: transparent !important;
+    transform: scale(1.24) !important;
+    transform-origin: center center !important;
+    box-shadow: 0 6px 14px rgba(15, 23, 42, 0.2) !important;
+}
+
+body.dashboard-page .brand-logo-link:hover .brand-logo-img,
+body.dashboard-page .brand-logo-link:active .brand-logo-img {
+    transform: scale(1.24) !important;
+    filter: none !important;
+}
+
+body.dashboard-page #attendanceSection .table-container {
+    width: 100% !important;
+    max-width: 100% !important;
+    overflow-x: auto !important;
+    overflow-y: visible !important;
+    -webkit-overflow-scrolling: touch;
+}
+
+body.dashboard-page #attendanceSection .attendance-table {
+    min-width: 920px !important;
+    width: 100% !important;
+}
+
+body.dashboard-page #attendanceSection .attendance-table td strong {
+    color: #7f1d1d !important;
+}
+
+@media (max-width: 900px) {
+    body.dashboard-page #mobileToggle {
+        display: inline-flex !important;
+    }
+
+    body.dashboard-page #sidebar {
+        position: fixed !important;
+        top: 0 !important;
+        left: 0 !important;
+        height: 100vh !important;
+        transform: translateX(-104%) !important;
+        transition: transform 220ms ease !important;
+        z-index: 1002 !important;
+    }
+
+    body.dashboard-page #sidebar.active {
+        transform: translateX(0) !important;
+    }
+
+    body.dashboard-page #mobileSidebarOverlay {
+        position: fixed !important;
+        inset: 0 !important;
+        background: rgba(0, 0, 0, 0.45) !important;
+        opacity: 0 !important;
+        visibility: hidden !important;
+        pointer-events: none !important;
+        transition: opacity 200ms ease !important;
+        z-index: 1001 !important;
+    }
+
+    body.dashboard-page #mobileSidebarOverlay.active {
+        opacity: 1 !important;
+        visibility: visible !important;
+        pointer-events: auto !important;
+    }
+
+    body.dashboard-page .dashboard-content {
+        margin-left: 0 !important;
+        width: 100% !important;
+        max-width: 100% !important;
+    }
+
+    body.dashboard-page #attendanceSection .attendance-table {
+        min-width: 860px !important;
+    }
+}
+
+@media (max-width: 560px) {
+    body.dashboard-page #attendanceSection .attendance-table {
+        min-width: 780px !important;
+    }
+
+    body.dashboard-page .brand-logo-link {
+        width: 50px !important;
+        height: 50px !important;
+    }
+}
+
+/* =====================================================
+   Teacher Portal Full Redesign (Red + White)
+   ===================================================== */
+
+.dashboard-page {
+    --dash-red: #dc2626;
+    --dash-red-dark: #b91c1c;
+    --dash-red-soft: #fee2e2;
+    --dash-red-border: #fecaca;
+    --dash-text: #7f1d1d;
+    --dash-text-soft: #991b1b;
+    --dash-white: #ffffff;
+    --dash-bg: #fff7f7;
+    background: radial-gradient(circle at top right, #fff1f2 0%, #ffffff 48%, #ffe4e6 100%) !important;
+    color: var(--dash-text);
+}
+
+.dashboard-page .sidebar {
+    background: linear-gradient(180deg, #ef4444 0%, #dc2626 48%, #b91c1c 100%) !important;
+    color: #ffffff;
+    border-right: 1px solid rgba(255, 255, 255, 0.2);
+    box-shadow: 8px 0 28px rgba(185, 28, 28, 0.25);
+}
+
+.dashboard-page .sidebar-header,
+.dashboard-page .sidebar-footer {
+    border-color: rgba(255, 255, 255, 0.22);
+}
+
+.dashboard-page .sidebar .brand-title-wrap h2,
+.dashboard-page .sidebar .brand-subtitle,
+.dashboard-page .user-name,
+.dashboard-page .user-role {
+    color: #ffffff !important;
+}
+
+.dashboard-page .nav-item {
+    color: rgba(255, 255, 255, 0.95);
+    border: 1px solid transparent;
+}
+
+.dashboard-page .nav-item:hover {
+    background: rgba(255, 255, 255, 0.14);
+    border-color: rgba(255, 255, 255, 0.35);
+}
+
+.dashboard-page .nav-item.active,
+.dashboard-page .nav-item.active:hover {
+    background: #ffffff !important;
+    color: var(--dash-red) !important;
+    border-color: #ffffff;
+    box-shadow: 0 10px 20px rgba(127, 29, 29, 0.2);
+}
+
+.dashboard-page .nav-item.active i {
+    color: var(--dash-red) !important;
+}
+
+.dashboard-page .btn-logout {
+    background: #ffffff !important;
+    color: var(--dash-red) !important;
+    border: none;
+    font-weight: 700;
+}
+
+.dashboard-page .btn-logout:hover {
+    background: #ffe4e6 !important;
+}
+
+.dashboard-page .dashboard-content {
+    background: transparent;
+    padding: 24px;
+}
+
+.dashboard-page .topbar {
+    background: linear-gradient(135deg, #ffffff 0%, #fff5f5 100%);
+    border: 1px solid var(--dash-red-border);
+    border-radius: 18px;
+    box-shadow: 0 10px 24px rgba(220, 38, 38, 0.1);
+}
+
+.dashboard-page .topbar h1 {
+    color: var(--dash-red-dark);
+    letter-spacing: -0.02em;
+}
+
+.dashboard-page .school-slogan {
+    color: var(--dash-text-soft);
+}
+
+.dashboard-page .date-display {
+    background: linear-gradient(135deg, var(--dash-red), var(--dash-red-dark)) !important;
+    color: #ffffff !important;
+    border: none;
+    border-radius: 999px;
+    box-shadow: 0 10px 20px rgba(185, 28, 28, 0.2);
+}
+
+.dashboard-page .mobile-toggle,
+.dashboard-page .sidebar-toggle {
+    background: #ffffff;
+    color: var(--dash-red);
+    border: 1px solid var(--dash-red-border);
+}
+
+.dashboard-page .mobile-toggle:hover,
+.dashboard-page .sidebar-toggle:hover {
+    background: #fff1f2;
+}
+
+.dashboard-page .section {
+    margin-top: 20px;
+}
+
+.dashboard-page .dashboard-hero-card {
+    display: grid;
+    grid-template-columns: 1.5fr 1fr;
+    gap: 18px;
+    align-items: center;
+    background: linear-gradient(135deg, #ffffff 0%, #fff1f2 100%);
+    border: 1px solid var(--dash-red-border);
+    border-radius: 20px;
+    padding: 20px;
+    box-shadow: 0 12px 24px rgba(220, 38, 38, 0.12);
+    margin-bottom: 18px;
+}
+
+.dashboard-page .hero-label {
+    display: inline-flex;
+    align-items: center;
+    font-size: 0.76rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--dash-red);
+    background: var(--dash-red-soft);
+    border: 1px solid var(--dash-red-border);
+    border-radius: 999px;
+    padding: 6px 10px;
+    margin-bottom: 8px;
+}
+
+.dashboard-page .hero-copy h2 {
+    font-size: clamp(1.1rem, 2.3vw, 1.6rem);
+    color: var(--dash-red-dark);
+    margin: 0 0 8px;
+}
+
+.dashboard-page .hero-copy h2 span {
+    color: var(--dash-red);
+}
+
+.dashboard-page .hero-copy p {
+    color: var(--dash-text-soft);
+    margin: 0;
+}
+
+.dashboard-page .hero-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    justify-content: flex-end;
+}
+
+.dashboard-page .hero-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    border-radius: 12px;
+    padding: 11px 14px;
+    font-weight: 700;
+    border: 1px solid transparent;
+    cursor: pointer;
+    transition: transform 160ms ease, box-shadow 160ms ease, background 160ms ease;
+}
+
+.dashboard-page .hero-btn:hover {
+    transform: translateY(-1px);
+}
+
+.dashboard-page .hero-btn-primary {
+    background: linear-gradient(135deg, var(--dash-red), var(--dash-red-dark));
+    color: #ffffff;
+    box-shadow: 0 10px 20px rgba(185, 28, 28, 0.25);
+}
+
+.dashboard-page .hero-btn-secondary {
+    background: #ffffff;
+    border-color: var(--dash-red-border);
+    color: var(--dash-red);
+}
+
+.dashboard-page .dashboard-stats {
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 14px;
+}
+
+.dashboard-page .stat-card-lg {
+    background: #ffffff;
+    border: 1px solid var(--dash-red-border);
+    border-radius: 16px;
+    box-shadow: 0 10px 20px rgba(127, 29, 29, 0.08);
+}
+
+.dashboard-page .stat-content h2 {
+    color: var(--dash-red-dark);
+}
+
+.dashboard-page .stat-content p {
+    color: var(--dash-text-soft);
+}
+
+.dashboard-page .stat-icon-lg.total,
+.dashboard-page .stat-icon-lg.present,
+.dashboard-page .stat-icon-lg.absent,
+.dashboard-page .stat-icon-lg.records {
+    background: var(--dash-red-soft);
+    color: var(--dash-red);
+}
+
+.dashboard-page .analytics-row {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 14px;
+}
+
+.dashboard-page .analytics-card,
+.dashboard-page .quick-actions,
+.dashboard-page .recent-section,
+.dashboard-page .records-header,
+.dashboard-page .table-container,
+.dashboard-page .no-records {
+    background: #ffffff;
+    border: 1px solid var(--dash-red-border);
+    border-radius: 16px;
+    box-shadow: 0 10px 20px rgba(127, 29, 29, 0.08);
+}
+
+.dashboard-page .analytics-header,
+.dashboard-page .records-header,
+.dashboard-page .quick-actions h3,
+.dashboard-page .recent-section h3 {
+    color: var(--dash-red-dark);
+}
+
+.dashboard-page .analytics-header h3 i,
+.dashboard-page .quick-actions h3 i,
+.dashboard-page .recent-section h3 i,
+.dashboard-page .records-header h2 i {
+    color: var(--dash-red);
+}
+
+.dashboard-page #attendanceCircle {
+    background: conic-gradient(var(--dash-red) 0deg, var(--dash-red) 0deg, #ffe4e6 0deg) !important;
+}
+
+.dashboard-page .progress-value {
+    color: var(--dash-red-dark);
+    background: #ffffff;
+}
+
+.dashboard-page .info-item {
+    border-color: var(--dash-red-border);
+}
+
+.dashboard-page .info-label {
+    color: var(--dash-text-soft);
+}
+
+.dashboard-page .info-value,
+.dashboard-page .text-success,
+.dashboard-page .text-danger {
+    color: var(--dash-red) !important;
+}
+
+.dashboard-page .trend-body {
+    align-items: center;
+}
+
+.dashboard-page .trend-meter-wrap {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    width: 100%;
+}
+
+.dashboard-page .trend-meter {
+    width: 54px;
+    height: 160px;
+    border-radius: 999px;
+    background: #ffe4e6;
+    border: 1px solid #fecdd3;
+    display: flex;
+    align-items: flex-end;
+    padding: 4px;
+}
+
+.dashboard-page .trend-fill {
+    width: 100%;
+    border-radius: 999px;
+    background: linear-gradient(180deg, #f87171 0%, #dc2626 100%);
+    transition: height 220ms ease;
+    min-height: 10px;
+}
+
+.dashboard-page .trend-meta {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.dashboard-page .trend-title {
+    margin: 0;
+    color: var(--dash-text-soft);
+    font-weight: 600;
+}
+
+.dashboard-page .trend-value {
+    margin: 0;
+    color: var(--dash-red);
+    font-size: 1.8rem;
+    font-weight: 800;
+    line-height: 1.1;
+}
+
+.dashboard-page .trend-note {
+    margin: 0;
+    color: var(--dash-text-soft);
+    font-size: 0.88rem;
+}
+
+.dashboard-page .action-btn {
+    background: #ffffff;
+    border: 1px solid var(--dash-red-border);
+    color: var(--dash-red-dark);
+    border-radius: 12px;
+    box-shadow: 0 8px 14px rgba(220, 38, 38, 0.08);
+}
+
+.dashboard-page .action-btn:hover {
+    background: #fff1f2;
+    color: var(--dash-red);
+}
+
+.dashboard-page .recent-item {
+    border-color: #ffe4e6;
+}
+
+.dashboard-page .recent-item h4 {
+    color: var(--dash-red-dark);
+}
+
+.dashboard-page .recent-status.present,
+.dashboard-page .status-badge.present {
+    background: #fee2e2;
+    color: #b91c1c;
+    border: 1px solid #fecaca;
+}
+
+.dashboard-page .recent-status.absent,
+.dashboard-page .status-badge.absent {
+    background: #fecaca;
+    color: #7f1d1d;
+    border: 1px solid #fca5a5;
+}
+
+.dashboard-page .filters {
+    gap: 10px;
+}
+
+.dashboard-page .filter-input {
+    border: 1px solid var(--dash-red-border);
+    background: #fff;
+    color: var(--dash-text);
+}
+
+.dashboard-page .filter-input:focus {
+    border-color: var(--dash-red);
+    box-shadow: 0 0 0 3px rgba(220, 38, 38, 0.12);
+}
+
+.dashboard-page .attendance-table thead {
+    background: #fff1f2;
+}
+
+.dashboard-page .attendance-table th {
+    color: var(--dash-red-dark);
+    border-bottom: 1px solid var(--dash-red-border);
+}
+
+.dashboard-page .attendance-table td {
+    color: #7f1d1d;
+    border-bottom: 1px solid #ffe4e6;
+}
+
+.dashboard-page .attendance-table tbody tr:hover {
+    background: #fff7f7;
+}
+
+.dashboard-page .btn-secondary {
+    background: #fff;
+    color: var(--dash-red);
+    border: 1px solid var(--dash-red-border);
+}
+
+.dashboard-page .btn-secondary:hover {
+    background: #fff1f2;
+}
+
+.dashboard-page .mobile-sidebar-overlay {
+    background: rgba(127, 29, 29, 0.42);
+}
+
+@media (max-width: 1180px) {
+    .dashboard-page .dashboard-hero-card {
+        grid-template-columns: 1fr;
+    }
+
+    .dashboard-page .hero-actions {
+        justify-content: flex-start;
+    }
+}
+
+@media (max-width: 980px) {
+    .dashboard-page .dashboard-content {
+        padding: 16px;
+    }
+
+    .dashboard-page .analytics-row {
+        grid-template-columns: 1fr;
+    }
+
+    .dashboard-page .trend-meter-wrap {
+        justify-content: flex-start;
+    }
+}
+
+@media (max-width: 760px) {
+    .dashboard-page .topbar {
+        padding: 14px;
+        border-radius: 14px;
+    }
+
+    .dashboard-page .date-display {
+        width: 100%;
+        justify-content: center;
+    }
+
+    .dashboard-page .hero-btn {
+        width: 100%;
+        justify-content: center;
+    }
+
+    .dashboard-page .dashboard-stats {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .dashboard-page .table-container {
+        overflow-x: auto;
+    }
+
+    .dashboard-page .attendance-table {
+        min-width: 700px;
+    }
+}
+
+@media (max-width: 560px) {
+    .dashboard-page .dashboard-content {
+        padding: 12px;
+    }
+
+    .dashboard-page .dashboard-stats {
+        grid-template-columns: 1fr;
+    }
+
+    .dashboard-page .topbar-left {
+        align-items: flex-start;
+    }
+
+    .dashboard-page .topbar h1 {
+        font-size: 1.2rem;
+    }
+
+    .dashboard-page .school-slogan {
+        font-size: 0.82rem;
+    }
+
+    .dashboard-page .trend-meter {
+        height: 132px;
+        width: 46px;
+    }
+
+    .dashboard-page .trend-value {
+        font-size: 1.45rem;
+    }
+}
+
+/* =====================================================
+   Red + Blue Theme Pass (Logo Inspired)
+   ===================================================== */
+
+:root {
+    --theme-red: #dc2626;
+    --theme-red-dark: #b91c1c;
+    --theme-blue: #2563eb;
+    --theme-blue-dark: #1d4ed8;
+}
+
+body,
+.main-page,
+.dashboard-page,
+.login-page {
+    background: radial-gradient(circle at top right, #eef4ff 0%, #f8faff 45%, #fff5f7 100%);
+}
+
+.btn-teacher,
+.btn-primary,
+.btn-login,
+.nav-item.active,
+.badge,
+.date-display {
+    background: linear-gradient(135deg, var(--theme-red), var(--theme-blue)) !important;
+}
+
+.btn-teacher:hover,
+.btn-primary:hover,
+.btn-login:hover,
+.nav-item.active:hover {
+    background: linear-gradient(135deg, var(--theme-red-dark), var(--theme-blue-dark)) !important;
+}
+
+.method-icon,
+.student-avatar,
+.user-avatar {
+    background: linear-gradient(135deg, var(--theme-red), var(--theme-blue)) !important;
+}
+
+.logo i,
+.panel-header h3 i,
+.quick-actions h3 i,
+.analytics-header h3 i,
+.form-group label i,
+.attendance-header h2 i {
+    color: var(--theme-blue);
+}
+
+.table-container {
+    border: 1px solid #dbe4f6;
+}
+
+.attendance-table thead {
+    background: linear-gradient(135deg, var(--theme-red), var(--theme-blue));
+}
+
+.recent-status.present,
+.status-badge.present {
+    background: rgba(37, 99, 235, 0.12);
+    color: #1d4ed8;
+}
+
+.recent-status.absent,
+.status-badge.absent {
+    background: rgba(220, 38, 38, 0.12);
+    color: #b91c1c;
+}
+
+/* Login: centered and cleaner */
+.login-card {
+    border: 1px solid #dce3f5;
+    box-shadow: 0 18px 40px rgba(37, 99, 235, 0.12);
+}
+
+.login-form {
+    display: grid;
+    gap: 10px;
+}
+
+.login-form .form-group,
+.login-options,
+.error-message,
+.btn-login,
+.login-footer {
+    max-width: 430px;
+    width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.login-form .form-input,
+.login-form .password-input .form-input {
+    text-align: center;
+}
+
+.login-form .form-input::placeholder {
+    text-align: center;
+}
+
+.password-input .toggle-password {
+    right: 10px;
+}
+
+.back-link,
+.back-link:hover,
+.back-link:focus,
+.back-link:active {
+    text-decoration: none !important;
+}
+
+/* Responsive reinforcement for all pages */
+img {
+    max-width: 100%;
+    height: auto;
+}
+
+@media (max-width: 900px) {
+    .header-content {
+        gap: 12px;
+    }
+
+    .brand-title-wrap h1 {
+        font-size: 1rem;
+    }
+
+    .brand-title-wrap h2 {
+        font-size: 0.86rem;
+    }
+
+    .dashboard-content {
+        margin-left: 0;
+    }
+
+    .topbar {
+        padding: 12px 14px;
+    }
+
+    .topbar-right {
+        width: 100%;
+        justify-content: flex-start;
+    }
+}
+
+@media (max-width: 767px) {
+    .header-actions {
+        width: 100%;
+        justify-content: center;
+    }
+
+    .date-time,
+    .btn-teacher {
+        width: 100%;
+        justify-content: center;
+    }
+
+    .attendance-grid,
+    .dashboard-stats,
+    .action-grid,
+    .analytics-info {
+        grid-template-columns: minmax(0, 1fr);
+    }
+
+    .filters,
+    .search-box,
+    .scanner-controls,
+    .action-buttons {
+        flex-direction: column;
+    }
+
+    .filters .filter-group,
+    .action-buttons .btn,
+    .scanner-controls .btn,
+    .search-box .btn-search {
+        width: 100%;
+        min-width: 0;
+    }
+
+    .login-form .form-group,
+    .login-options,
+    .error-message,
+    .btn-login,
+    .login-footer {
+        max-width: 100%;
+    }
+}
+
+/* =====================================================
+   Teacher Mobile Sidebar - Final UI Fix
+   ===================================================== */
+@media (max-width: 900px) {
+    body.dashboard-page #sidebar .brand-logo-link {
+        display: none !important;
+    }
+
+    body.dashboard-page #sidebar .logo.navbar-brand-pro {
+        gap: 0 !important;
+    }
+
+    body.dashboard-page #sidebar .sidebar-header {
+        padding: 14px 14px 12px !important;
+        display: grid !important;
+        grid-template-columns: 1fr auto !important;
+        align-items: center !important;
+        gap: 10px !important;
+    }
+
+    body.dashboard-page #sidebar .logo.navbar-brand-pro {
+        gap: 10px !important;
+        min-width: 0;
+    }
+
+    body.dashboard-page #sidebar .brand-title-wrap h2 {
+        font-size: 1.15rem !important;
+        line-height: 1.2 !important;
+        font-weight: 700 !important;
+        margin: 0 !important;
+    }
+
+    body.dashboard-page #sidebar .brand-subtitle {
+        font-size: 0.78rem !important;
+        margin-top: 2px !important;
+        opacity: 0.96;
+    }
+
+    body.dashboard-page #sidebar .sidebar-toggle {
+        display: none !important;
+    }
+
+    body.dashboard-page #sidebar .sidebar-close {
+        display: inline-flex !important;
+        width: 40px !important;
+        height: 40px !important;
+        border-radius: 50% !important;
+        background: rgba(255, 255, 255, 0.14) !important;
+        border: 1px solid rgba(255, 255, 255, 0.45) !important;
+        color: #ffffff !important;
+        flex-shrink: 0;
+    }
+
+    body.dashboard-page #sidebar .sidebar-close i {
+        font-size: 1.25rem !important;
+        color: #ffffff !important;
+    }
+
+    body.dashboard-page #mobileToggle {
+        width: 52px !important;
+        height: 52px !important;
+        border-radius: 12px !important;
+        background: #ffffff !important;
+        border: 1px solid #fecaca !important;
+        display: inline-flex !important;
+        align-items: center;
+        justify-content: center;
+    }
+
+    body.dashboard-page #mobileToggle i {
+        color: #dc2626 !important;
+        font-size: 1.45rem !important;
+    }
+}
+
+@media (max-width: 520px) {
+    body.dashboard-page #sidebar .brand-title-wrap h2 {
+        font-size: 1.05rem !important;
+    }
+
+    body.dashboard-page #sidebar .brand-subtitle {
+        font-size: 0.72rem !important;
+    }
+}
+
+@media (max-width: 430px) {
+    .brand-title-wrap h1 {
+        font-size: 0.92rem;
+    }
+
+    .brand-subtitle {
+        font-size: 0.72rem;
+    }
+
+    .login-header h1 {
+        font-size: 1.15rem;
+    }
+
+    .login-tagline {
+        font-size: 0.82rem;
+    }
+}
+
+/* =====================================================
+   User Preference Override
+   Text: Blue | Icons + Buttons: Red
+   ===================================================== */
+
+:root {
+    --user-blue-text: #1d4ed8;
+    --user-red-ui: #dc2626;
+    --user-red-ui-dark: #b91c1c;
+}
+
+body,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+span,
+label,
+strong,
+small,
+a,
+li,
+td,
+th,
+input,
+select,
+option,
+textarea {
+    color: var(--user-blue-text);
+}
+
+i,
+.fas,
+.far,
+.fab,
+.logo i,
+.method-icon i,
+.student-avatar i,
+.user-avatar i,
+.quick-actions h3 i,
+.panel-header h3 i,
+.analytics-header h3 i,
+.form-group label i {
+    color: var(--user-red-ui) !important;
+}
+
+.btn,
+.btn-teacher,
+.btn-primary,
+.btn-secondary,
+.btn-success,
+.btn-danger,
+.btn-search,
+.btn-login,
+.btn-logout,
+.action-btn,
+.nav-item.active,
+.badge,
+.date-display {
+    background: var(--user-red-ui) !important;
+    border-color: var(--user-red-ui) !important;
+    color: #ffffff !important;
+}
+
+.btn:hover,
+.btn-teacher:hover,
+.btn-primary:hover,
+.btn-secondary:hover,
+.btn-success:hover,
+.btn-danger:hover,
+.btn-search:hover,
+.btn-login:hover,
+.btn-logout:hover,
+.action-btn:hover,
+.nav-item.active:hover {
+    background: var(--user-red-ui-dark) !important;
+    border-color: var(--user-red-ui-dark) !important;
+    color: #ffffff !important;
+}
+
+/* Final consistency pass: red icon backgrounds + white icons/text */
+.method-icon,
+.student-avatar,
+.user-avatar,
+.stat-icon-lg,
+.quick-stat-icon,
+.login-icon,
+.theme-btn,
+.mobile-toggle,
+.sidebar-toggle {
+    background: var(--user-red-ui) !important;
+    border-color: var(--user-red-ui) !important;
+    color: #ffffff !important;
+}
+
+.stat-icon-lg.total,
+.stat-icon-lg.present,
+.stat-icon-lg.absent,
+.stat-icon-lg.records {
+    background: var(--user-red-ui) !important;
+}
+
+.btn,
+.btn-teacher,
+.btn-primary,
+.btn-secondary,
+.btn-success,
+.btn-danger,
+.btn-search,
+.btn-login,
+.btn-logout,
+.action-btn,
+.nav-item.active,
+.badge,
+.date-display,
+.recent-status.present,
+.recent-status.absent,
+.status-badge.present,
+.status-badge.absent,
+.attendance-table thead {
+    background: var(--user-red-ui) !important;
+    border-color: var(--user-red-ui) !important;
+    color: #ffffff !important;
+}
+
+.btn:hover,
+.btn-teacher:hover,
+.btn-primary:hover,
+.btn-secondary:hover,
+.btn-success:hover,
+.btn-danger:hover,
+.btn-search:hover,
+.btn-login:hover,
+.btn-logout:hover,
+.action-btn:hover,
+.nav-item.active:hover,
+.theme-btn:hover {
+    background: var(--user-red-ui-dark) !important;
+    border-color: var(--user-red-ui-dark) !important;
+    color: #ffffff !important;
+}
+
+.btn i,
+.btn-teacher i,
+.btn-primary i,
+.btn-secondary i,
+.btn-success i,
+.btn-danger i,
+.btn-search i,
+.btn-login i,
+.btn-logout i,
+.action-btn i,
+.nav-item.active i,
+.badge i,
+.date-display i,
+.method-icon i,
+.student-avatar i,
+.user-avatar i,
+.stat-icon-lg i,
+.quick-stat-icon i,
+.login-icon i,
+.theme-btn i,
+.mobile-toggle i,
+.sidebar-toggle i,
+.recent-status i,
+.status-badge i,
+.attendance-table thead i {
+    color: #ffffff !important;
+}
+
+/* =====================================================
+   Teacher Login - Centered Portal Redesign
+   ===================================================== */
+
+.login-page {
+    padding: 20px 10px;
+}
+
+.portal-layout {
+    max-width: 430px;
+    margin: 0 auto;
+}
+
+.portal-card {
+    background: #fff;
+    border-radius: 16px;
+    overflow: hidden;
+    border: 1px solid #dbe3ef;
+    box-shadow: 0 12px 28px rgba(220, 38, 38, 0.12);
+}
+
+.portal-hero {
+    background: linear-gradient(135deg, var(--user-red-ui) 0%, #ef4444 100%);
+    color: #fff;
+    text-align: center;
+    padding: 28px 20px 24px;
+}
+
+.portal-hero .login-logo-wrap {
+    margin-bottom: 12px;
+}
+
+.portal-hero .login-logo-img {
+    width: 62px;
+    height: 62px;
+    border-radius: 50%;
+    border: 3px solid rgba(255, 255, 255, 0.55);
+    box-shadow: 0 10px 20px rgba(15, 23, 42, 0.25);
+    background: #fff;
+    padding: 2px;
+}
+
+.portal-hero h1,
+.portal-hero .login-tagline,
+.portal-hero .hero-subtitle {
+    color: #fff !important;
+    margin: 0;
+}
+
+.portal-hero h1 {
+    font-size: 2rem;
+    font-weight: 700;
+    margin-bottom: 8px;
+}
+
+.portal-hero .login-tagline {
+    font-size: 0.95rem;
+    opacity: 0.95;
+    margin-bottom: 10px;
+}
+
+.portal-hero .hero-subtitle {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 6px 14px;
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.18);
+    font-size: 0.85rem;
+    font-weight: 600;
+}
+
+.portal-body {
+    padding: 22px 18px 16px;
+}
+
+.login-form {
+    gap: 12px;
+}
+
+.login-form .form-group,
+.login-options,
+.error-message,
+.btn-login,
+.login-footer {
+    max-width: 480px;
+    width: 100%;
+    margin-left: 0;
+    margin-right: 0;
+}
+
+.login-form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.login-form .form-group {
+    width: 100%;
+}
+
+.login-form .form-group label {
+    color: #0f172a !important;
+    font-weight: 600;
+}
+
+.login-form .form-group label i {
+    color: var(--user-red-ui) !important;
+}
+
+.login-form .form-input {
+    border: 1px solid #cfd8e3;
+    border-radius: 10px;
+    padding: 14px 16px;
+    text-align: left;
+    color: #334155 !important;
+    background: #fff;
+    width: 100%;
+}
+
+.login-form .form-input::placeholder {
+    text-align: left;
+    color: #94a3b8;
+}
+
+.password-input .toggle-password {
+    right: 8px;
+    color: var(--user-red-ui) !important;
+}
+
+.caps-warning {
+    color: #b91c1c !important;
+}
+
+.remember-option span {
+    color: #334155 !important;
+}
+
+.btn-login {
+    background: linear-gradient(135deg, var(--user-red-ui), #ef4444) !important;
+    border: none !important;
+    color: #fff !important;
+    border-radius: 10px;
+    font-weight: 700;
+    width: 100%;
+}
+
+.btn-login:hover {
+    background: linear-gradient(135deg, var(--user-red-ui-dark), #dc2626) !important;
+}
+
+.login-footer {
+    margin-top: 14px;
+    text-align: center;
+    padding-top: 10px;
+    border-top: 1px solid #e2e8f0;
+}
+
+.back-link,
+.back-link:hover,
+.back-link:focus,
+.back-link:active {
+    color: var(--user-red-ui) !important;
+    text-decoration: none !important;
+}
+
+.back-link i {
+    color: var(--user-red-ui) !important;
+}
+
+.support-note {
+    color: #64748b !important;
+    margin-top: 6px;
+    font-size: 0.8rem;
+}
+
+@media (max-width: 430px) {
+    .portal-layout {
+        max-width: 100%;
+    }
+
+    .portal-hero {
+        padding: 22px 14px 18px;
+    }
+
+    .portal-hero h1 {
+        font-size: 1.7rem;
+    }
+
+    .portal-body {
+        padding: 14px 10px 10px;
+    }
+
+    .login-form .form-group,
+    .login-options,
+    .error-message,
+    .btn-login,
+    .login-footer {
+        max-width: 100%;
+    }
+}
+
